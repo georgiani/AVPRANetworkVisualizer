@@ -1,0 +1,9 @@
+-r LPA/requirements.txt
+
+Flask==2.0.3
+Flask-Cors==3.0.10
+Werkzeug==2.0.3
+sympy==1.10.1
+networkx==2.8
+antlr4-python3-runtime==4.8
+waitress==2.1.1

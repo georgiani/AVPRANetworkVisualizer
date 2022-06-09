@@ -1,0 +1,86 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .custom-hoverable-button-lg {
+    @apply font-mono px-6 py-4 
+           m-2
+           text-lg rounded-lg 
+           transition-all duration-300 
+           bg-slate-900 hover:bg-slate-800 text-white
+           border-0;
+  }
+
+  .custom-hoverable-button-sm {
+    @apply font-mono px-3 py-2 
+           m-2
+           text-sm rounded-lg 
+           transition-all duration-300 
+           bg-slate-900 hover:bg-slate-800 text-white
+           border-0;
+  }
+
+  .custom-hoverable-button-md {
+    @apply font-mono px-4 py-3 
+           m-2
+           text-base rounded-lg 
+           transition-all duration-300 
+           bg-slate-900 hover:bg-slate-800 text-white
+           border-0;
+  }
+
+  .node-neutral {
+    @apply stroke-slate-700 transition-colors duration-200;
+  }
+
+  .node-active {
+    @apply stroke-black stroke-2 transition-colors duration-200;
+  }
+
+  .node-active-comm {
+    @apply stroke-red-600 stroke-2 transition-colors duration-200;
+  }
+
+  .node-neighbour {
+    @apply stroke-white stroke-2 transition-colors duration-200;
+  }
+  
+  .link-active {
+    @apply stroke-red-600 stroke-2;
+  }
+
+  .link-neutral {
+    @apply stroke-gray-400 stroke-1;
+  }
+
+  .toggle:after {
+    content: '';
+    @apply absolute bg-white rounded-full h-5 w-5 transition shadow-sm;
+  }
+
+  input.toggle-input {
+    @apply sr-only;
+  }
+
+  .toggle {
+    @apply bg-slate-600 border-slate-600 border-2 h-6 w-11 rounded-full;
+  }
+
+  input.toggle-input:checked + .toggle:after {
+    transform: translateX(100%);
+  }
+
+  input.toggle-input:checked + .toggle {
+    @apply bg-slate-800 border-slate-800 border-2;
+  }
+
+  .tooltip {
+    @apply invisible absolute;
+  }
+
+  .has-tooltip:hover .tooltip {
+    @apply visible z-50;
+  }
+}
+

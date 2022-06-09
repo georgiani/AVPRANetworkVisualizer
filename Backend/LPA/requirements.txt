@@ -1,0 +1,4 @@
+simpy==2.3
+python-igraph==0.9.10
+leidenalg==0.8.10
+cdlib==0.2.6

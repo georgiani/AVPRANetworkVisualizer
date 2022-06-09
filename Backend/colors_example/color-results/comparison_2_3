@@ -1,0 +1,1 @@
+{"node1": {"community": 1, "degree": 2, "neigh": [1, 4], "id": 2, "VL": [0.0, 0.0, 1.0], "betweenness_centrality": 0.6666666666666666}, "node2": {"community": 0, "degree": 1, "neigh": [1], "id": 3, "VL": [1.0, 0.0, 0.0], "betweenness_centrality": 0.0}, "cosineSimilarity": 1, "timestamp": 0}
