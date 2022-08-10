@@ -1,0 +1,414 @@
+\documentclass[a4paper,12pt]{report}
+
+\usepackage[a4paper]{geometry}
+\usepackage{amssymb,amsmath,amsthm}
+\usepackage{graphicx}
+\graphicspath{ {./images} }
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{epsfig}
+\usepackage[italian]{babel}
+\usepackage{setspace}
+\usepackage{tesi}
+\usepackage{makeidx}
+
+% per le accentate
+\usepackage[utf8]{inputenc}
+\begin{document}
+\title{Un'applicazione web per dimostrare le proprietà degli algoritmi di label propagation}
+\author{Andrei Georgiani TALPALARU}
+\dept{Corso di Laurea in Informatica} 
+\anno{2019-2020}
+\matricola{942824}
+\relatore{Prof. Paolo CERAVOLO}
+\correlatore{Dr. Samira MAGHOOL}
+
+\beforepreface
+\prefacesection{Ringraziamenti}
+\afterpreface
+% 
+% 
+%		
+\chapter{Introduzione}
+\label{cap1}
+%/
+%
+
+\chapter{Social Network Analysis (da aggiungere piu informazioni a ogni sezione)}
+	La Social Network Analysis e l'analisi delle strutture sociali attraverso le reti e la teoria dei grafi. \cite{snaintro}
+	Grazie ad una rappresentazione astratta, dove le connessioni tra certi elementi di un sistema, chiamati anche nodi o agenti (quando sono capaci di fare scelte o azioni attive), la SNA puo essere applicata a una varieta di domini. Il comportamento del sistema, in termini di communicazione, propagazione ed evoluzione delle connessioni e catturato da metriche di SNA. \cite{avpra}
+
+	\section{Reti}
+	Una rete e composta da due componenti di base: i nodi e gli archi. Usando questi due componenti si possono descrivere una multidudine di strutture e relazioni (per esempio connessioni sociali, connessioni in una rete di computer, reti elettriche \dots). \par
+	 I nodi sono le entita presenti nella rete e che possono avere proprieta interne (per esempio un valore che rappresenta il grado del nodo, o il peso o una posizione nella rete). \par
+	Gli archi sono le connessioni tra i nodi che possono avere a loro volta delle proprieta (per esempio un peso o un'altro tipo di relazione tra i nodi collegati alle estremita dell'arco).	\cite{snaintro} \par
+
+	\section{Label Propagation}
+	Label Propagation rappresenta una famiglia di algoritmi usati per preddire le ettichete dei nodi di una rete. 
+	Differisce da altri algoritmi di Social Network Analysis siccome, invece di adottare una visione globale della rete, le decisioni prese dall'algoritmo sono fatte rispetto a proprieta locali, quindi gli algoritmi di Label Propagation adottano una visione locale della rete. \cite{raghavan} \par
+
+	L'idea generale e che le ettichete assegnate inizialmente ai nodi sono propagate attraverso la rete seguendo gli archi. La propagazione di un'etticheta a un nodo si basa sulle ettichete dei suoi vicini, tipicamente a un salto di distanza. Molteplici iterazioni permettono il raggiungimento di un'approssimazione del ottimo globale partendo da un ottimo locale. La complessita temporale varia tra tempo lineare ed esponenziale, dipendendo dalla densita della rete. L'approccio e naturalmente decentralizato, con passaggi singoli su ogni nodo ad ogni iterazione. \cite{avpra}
+	
+	\section{Algoritmi di Label Propagation}
+	La scelta principale che differenzia i diversi algoritmi di Label Propagation e legata alla Update Rule. Alcune varianti della Update Rule che sono state usate nel tempo sono: il grado dei nodi, il coefficiente di clustering e la similarita strutturale.
+	La limitazione principale degli algoritmi precedenti era l'impossibilita di scegliere piu di un'etticheta per ogni nodo. \par	
+	Gli algoritmi sono stati generalizzati per permettere l'identificazione di communita sovrapposte. Ogni etticheta viene pesata con un belonging coefficient associato al nodo. Tutti i belonging coefficient di un nodo sommano a 1. \par
+	
+	\section{AVPRA (Agent-based Vector-label PRopagation Algorithm)}
+	AVPRA e un'algoritmo di Label Propagation basato su un'organizzazione ad agenti che permette di implementare la regola di update rispetto a piu fattori, come per esempio le proprieta di dominio. 
+	AVPRA differisce dagli altri algoritmi tramite il fatto che l'output dell'algoritmo e un vettore compatibile col formato di input usato in maggior parte degli algoritmi di Machine Learning. Il vettore ha una lunghezza fissata per tutti gli nodi e include tutte le label della rete assieme al loro belonging coefficient basato sulle proprieta strutturali della rete. \par
+	Il belonging coefficient nel caso di AVPRA rappresenta una misura di diffusione/accumulo delle ettichete dei nodi, dipendente dalla distanza rispetto ad altri nodi e la loro frequenza. \cite{avpra} \par
+		\subsection{Update Function}
+		\subsection{Iterazione Finale}
+		L'algoritmo AVPRA finisce quando il sistema raggiunge un'iterazione s nella quale i vettori di ettichete sono stazionari. Cio implica che le variazioni dei belonging coefficient devono essere minori di un parametro p che viene chiamato negligibly threshold. \par
+		
+
+\chapter[Il sviluppo dell'applicazione]{Il sviluppo di un applicazione per dimostrare le proprieta dell'algoritmo AVPRA}
+\label{chapter4}
+
+	\section{Applicazioni di visualizzazione delle reti sociali}
+		
+		\subsection{Visualizzatore Reti Sociali con AVPRA}
+		AVPRA è un'algoritmo di Label Propagation basato su Agenti.
+		Il visualizzatore delle Reti Sociali per AVPRA è un'applicazione web che permette all'utente di
+		eseguire e visualizzare i risultati dell'algoritmo in un modo interattivo nel browser web. \par \cite{avpra}
+		
+			\subsubsection*{I Pro}
+				\begin{itemize}
+					\item Ha tanti parametri che permettono all'utente di controllare il comportamento dell'algoritmo e dell'input.
+					\item Permette l'esportazione della rete e delle informazioni visibili sullo schermo in formato PNG.
+					\item Permette di esportare le informazioni riguardanti il grafo e il output in formato JSON.
+					\item Singoli nodi possono essere selezionati in modo da poter vedere piu dettagli e misure riguardanti quel specifico nodo.
+					\item Offre la possibilita di selezionare, comparare ed esportare la comparazione tra due nodi diversi della rete.
+					\item Sopporta la visualizzazione di due viste diverse: Vector Label View (mostra in modo grafico la distribuzione delle label su ogni nodo) e Community View (mostra in modo grafico la divisione della rete in communita basate sulla struttura.).
+					\item Mostra graficamente la divisione in communita raggruppando i nodi della stessa communita piu vicini uno all'altro.
+					\item Permette all'utente di eseguire l'algoritmo per piu iterazioni e di vedere graficamente l'evoluzioni dei Vector Label nel tempo (feature specifica di AVPRA).
+					\item La paletta di colori utilizzata per i label nei Vector Label puo essere modificata usando un'ulteriore file nella fase di caricamento della propria rete.
+					\item Permette all'utente di selezionare un nodo specifico tramite una barra di ricerca dove si puo inserire l'id del nodo.
+				\end{itemize}
+						
+			\subsubsection*{I Contro}
+				\begin{itemize}
+					\item Sopporta un solo formato di input (tre file CSV: Lista Archi, Vector Label Iniziali, Nomi Label) e due formati di output (un file pickled contenente i risultati di tutte le iterazioni dell'algoritmo e un file JSON contenente i dati della rete o la comparazione di due nodi diversi).
+					\item I dataset dell'utente e i risultati delle esecuzioni dell'algoritmo su quei dataset sono tenute sul server dell'applicazione, anche se per poco tempo.
+					\item Performance piu scarse nel caso venga usato con reti molto grandi.
+				\end{itemize}
+
+		\subsection{Infomap Network Navigator}
+		Infomap è un'algoritmo di clustering su reti basato su Map Equation. Infomap Online è un'applicazione web che permette agli utenti di eseguire
+		l'algoritmo Infomap nel browser web. \cite{mapequationsite} \par
+		
+		Infomap Network Navigator è un'applicazione che permette di visualizzare i risultati
+		dell'algoritmo in un modo interattivo. \cite{mapequationnavigatorsite} \par
+
+		
+			\subsubsection*{I Pro}
+				\begin{itemize}
+					\item I dataset dell'utente e i risultati dell'esecuzione dell'algoritmo su quei dataset non sono mantenute sul server di Infomap Online.
+					\item Ha tanti parametri per controllare il comportamento dell'algoritmo, dell'input, del output e dell'accuratezza.
+					\item Sopporta tanti formati di input (Link-List, Pajek, Bipartite, Multilayer, With inter-layer links, Without inter-layer links, States) e tanti formati di output (Phyisical, State-level output, Tree, FTree, Clu, Newick, JSON). Infomap riconosce automaticamente il formato dei file dal header del file.
+					\item Permette di esportare la visualizzazione in formati SVG e PNG.
+					\item Permette l'esportazione del file di output.
+					\item Singoli nodi possono essere selezionati in modo da vedere piu dettagli e misure riguardati il specifico nodo.
+					\item Permette all'utente di selezionare un nodo specifico tramite una barra di ricerca.
+					\item Visually shows communities by grouping nodes or other sub-communities in a module (Map Equation algorithm specific visualization). Mostra graficamente il raggruppamento dei nodi in communita e sotto-communita attraverso un modulo (feature specifica Map Equation).
+				\end{itemize}			
+
+			\subsubsection*{I Contro}
+				\begin{itemize}
+					\item L'esportazione della visualizzazione non include nient'altro oltre la rete stessa.
+					\item Non offre la possibilita di vedere il modo in cui due nodi diversi della rete siano correlati.
+					\item Esiste un limite sulla dimensione dei file di input che si possono utilizzare.
+					\item Non esiste un modo per personalizzare la paletta di colori che viene usata nella visualizzazione.
+				\end{itemize}
+
+	\section{Sviluppo}
+		Il progetto e un'applicazione web che e divisa in 2 parti:
+		\begin{itemize}
+		\item Frontend - la componente dell'applicazione con cui l'utente interagisce direttamente.
+		\item Backend - la componente dell'applicazione con cui interagisce il frontend e che si occupa di esporre un'API che esegue le funzionalita richieste dal frontend.
+		\end{itemize}
+		\subsection{Funzionalita previste}
+			\subsubsection{Backend}
+			\begin{itemize}
+				\item Dev'essere capace di eseguire l'algoritmo AVPRA dato in Python.
+				\item Deve esporre un'API che:
+				\begin{itemize}
+					\item permette all'utilizzatore di eseguire l'algoritmo
+					\item permette all'utilizzatore di controllare i parametri dell'algoritmo come numero di iterazioni, neglibility threshold, interpretazione della rete (directed, undirected), modo di propagazione delle label (da predecessori, da successori) e formula dei pesi della regola di Update.
+					\item permette di ottenere i dettagli riguardanti un solo nodo ad una certa iterazione.
+					\item permette di ottenere i dettagli riguardanti la relazione tra due nodi ad una certa iterazione.
+					\item permette di esportare i risultati e i dettagli dell'esecuzione in un formato definito.
+					\item Deve permettere all'utente di caricare ed eseguire l'algoritmo sulla propria rete usando un formato definito.
+				\end{itemize}
+			\end{itemize}
+
+			\subsubsection{Frontend}
+				\begin{itemize}
+					\item Deve permettere all'utente di visualizzare in modo interattivo la situazione, alla iterazione corrente, della rete e dei suoi vector label.
+					\item Deve implementare un modo in cui l'utente possa caricare la sua propria rete.
+					\item Deve dare la possibilita all'utente di avere piu informazioni riguardo lo stato corrente di un vector label di un nodo specifico.
+					\item Deve permettere di avere informazioni riguardo l'iterazione corrente e l'iterazione finale (da definire) dell'algoritmo.
+					\item Deve implementare un modo in cui si possa andare avanti e indietro tra le iterazioni in modo da vedere l'evoluzione dei vector label.
+					\item Deve fare possibile la visualizzazione delle communita associate alla rete.
+					\item Deve permettere di selezionare 2 nodi e di vedere la situazione corrente di entrambi.
+					\item Deve implementare un modo di esportare i file che si possono esportare attraverso l'API esposta dal backend.
+				\end{itemize}
+
+		\subsection{Sviluppo dell'applicazione web}
+
+			\subsubsection{Frontend}
+			Per lo sviluppo della parte Frontend dell'applicazione, contenente l'interfaccia utente e la comunicazione col backend, sono state utilizzate diverse tecnologie e librerie. \par
+			Le librerie e tecnologie che sono state utilizzate sono:
+			\begin{itemize}
+				\item React.js \par
+				React e una libreria di JavaScript che viene usata per creare in modo facile delle interfacce utente interattive. \par
+				I componenti piu importanti di questa libreria che sono utilizzati all'interno dell'applicazione sono:
+				\begin{itemize}
+				\item Componenti \par
+				I componenti sono le parti che permettono di organizzare l’interfaccia utente in React. Questi possono essere definiti in due modi: Classi Componente e Funzioni Componente. \cite{componentireact} \par
+				Le Funzioni Componente sono funzioni JavaScript che prendono in input dei dati (chiamati props) e ritornano degli elementi React che descrivono, tramite JSX, il modo in cui dovrebbe essere visualizzato sullo schermo. \cite{tipicomponenti} \par
+				Le Classi Componente sono classi che estendono React.Component e che implementano un metodo render che restituisce un elemento React. \par
+				\item Stato \par
+				Gli aggiornamenti della UI in JavaScript base dovevano accadere trovando l’elemento nel DOM e aggiornandolo manualmente. React, invece, aggiorna automaticamente la UI in base al stato interno del componente. Prima dell’aggiunta dei Hooks, per modificare il stato interno di un componente era neccessario che esso veniva scritto come Classe Componente. Dopo l’aggiunta del hook useState, il stato poteva essere utilizzato anche all’interno di una Funzione Componente. E neccessario usare useState (Funzione Componente) o setState (Classe Componente) in modo che React capisca che la UI che usa il stato interno debba essere renderizzato per mostrare il valore aggiornato dello stato. \cite{statoreact} \par
+				\item Hooks \par
+				Gli Hooks sono stati aggiunti per permettere di utlizzare stato e altre funzioni che esistevano nelle Classi Componente anche nelle Funzioni Componente \cite{hooksreact}. Alcuni esempi di hooks maggiormente utilizzati sono: \par
+				\begin{itemize}
+				\item useState - hook che permette di aggiungere stato a funzioni componente.
+				\item useEffect - hook che permette di aggiungere side effects in funzioni componente, il che significa poter far succedere qualcosa in base al cambiamento delle dipendenze dichiarate. Puo essere usato anche per simulare i comportamenti componentDidMount e componentDidUpdate delle classi componenti.
+				\end{itemize}
+				All'interno dell'applicazione sono stati creati alcuni Hook Custom che hanno permesso di facilitare il processo di sviluppo. I hook che sono stati implementati sono useGUIControls (che mette a disposizione le funzioni e i dati da utilizzare per i controlli delle pagine riguardanti la visualizzazione dei grafi), usePolling (che permette di chiamare un endpoint dell'API in modo ripetuto a intervalli regolari nel caso esso rispondeva con un codice di Not Ready) e useSS (che permette di fotografare il schermo e viene utilizzato nel caso in cui si preme il tasto di Screenshot sull'applicazione).
+				\item JSX \par
+				JSX rappresenta un’estensione di JavaScript che permette di scrivere HTML direttamente all’interno di JavaScript. Usando Babel, JSX viene poi compilato in chiamate React.createElement(). Cio significa che JSX puo essere usato anche in strutture condizionali, per poter proddure risultati diversi rispetto a una decisione. \cite{jsxreact} \par
+				\end{itemize}
+				\item Typescript \par
+				TypeScript è un’estensione di JavaScript che aggiunge una sintassi per i tipi e una migliore integrazione coi editor, aiutando in questo modo il sviluppatore a trovare velocemente gli errori dovuti ai tipi. \cite{typescript} \par
+				I tipi di dati che TypeScript introduce sono:
+				\begin{itemize}
+				\item number - numero floating point con doppia precisione
+				\item string
+				\item bigint
+ 				\item boolean
+				\item symbol
+				\item null
+				\item undefined
+				\item object
+				\item void - tipo inteso come tipo di ritorno per le funzioni che non ritornano un valore
+				\item T[] - array mutabili
+				\item {[T, T]} - tuple di dimensione fissata, ma mutabili
+				\item (t: T) U - funzioni che prendono in input un tipo T e restituiscono un tipo U
+				\end{itemize}
+				\item Next.js \par
+				Next.js è un framework di React che risolve maggior parte dei problemi che si incontrano quando si cerca di lavorare solo con la libreria React (da aggiungere piu dettagli). Per framework si intende che Next.js gestisce in modo autonomo gli strumenti e le configurazioni che React necessita, offrendo pero anche funzionalita aggiuntive. \cite{nextjs} \par
+				\item D3.js \par
+				D3.js è una libreria per manipolazione di documenti in base a dati. D3.js permette di associare dati al DOM e costruire visualizzazioni per quei dati sull’applicazione che si sta creando. Nel caso presente D3.js viene utilizzato per costruire la visualizzazione del grafo e per aggiungere interattivita ad esso. \cite{d3js} \par
+				\item Katex \par
+				KaTeX è una libreria JavaScript usata per visualizzare formule matematiche sulla pagina. Nel caso presente, questa libreria è stata usata per poter mostrare all’utente la formula coi pesi che si stanno inserendo quando si usa la visualizzazione delle reti personalizzate. \cite{katex} \par
+				\item Tailwind CSS \par
+				Tailwind CSS è un framework di CSS che offre classi di utilita che aiutano il sviluppatore a evitare di scrivere CSS direttamente. Usando solo Tailwind CSS si puo evitare di usare valori arbitrari per maggior parte delle misure, e quindi si arriva ad essere più consistenti col design dell’applicazione. Nell’applicazione presentata, questo framework è stato usato per fare tutto il layout del sito. \cite{tailwindcss} \par
+			\end{itemize}
+
+			\subsubsection{Backend}
+			
+			Da descrivere l'API.
+
+			Per lo sviluppo della parte Backend dell'applicazione, contenente l'API che ha la capacita di rispondere alle richieste del frontend, sono state utilizzate diverse tecnologie e librerie. \par
+			Le librerie e tecnologie che sono state utilizzate sono:
+			\begin{itemize}
+				\item Flask \par
+				Flask è un microframework web basato su Python che è stato usato, nel caso presente, per il sviluppo del Backend come un REST API. \cite{flaskforeword} \par
+				Flask permette di creare un’API nel modo più semplice possibile, ed è stato scelto come tecnologia di Backend poichè l’algoritmo che viene usato per la processazione delle reti è scritto in Python, e quindi la scelta più facile per un linguaggio di Backend era Python. \par
+				Nel caso dell’esempio dei colori, il server di backend risponde puramente da file statici con la rete già processata. Nel caso degli esempi personali, i file necessari vengono caricati sul server, vengono processati, e fino alla scadenza della sessione, si può visualizzare la rete personalizzata.
+				
+				\item Sympy \par
+				Sympy è una libreria di Python per l’interpretazione di matematica simbolica. È stato usato per poter interpretare le formule per i pesi che vengono mandate dal Frontend nel caso di esempi personalizzati. \cite{sympy}
+			
+				\item CDlib \par
+				CDlib è una libreria che aggrega tanti algoritmi di community detection. È stato utilizzato solamente per l’implementazione dell’algoritmo di community detection di Leiden. \cite{cdlib}
+			\end{itemize}
+		\subsection{Presentazione applicazione}
+			
+			\subsubsection{Pagina Principale}
+			La pagina principale serve per permettere all'utente di scegliere tra due modi di diversi di provare e visualizzare i risultati dell'algoritmo. Ogni modo ha una piccola descrizione del come funziona e un tasto per andare alla pagina specifica per quella modalita. Ogni modalita sara descritta in dettaglio nelle sezioni successive.\par
+			\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{paginaprincipale}
+	
+			\subsubsection{Esempio Colori}
+			La pagina dell'esempio colori, che si puo raggiungere premendo il bottone "Visualize Example" vicino a "Colors Example" sulla pagina principale, ha tutte le funzionalita dell'applicazione, dimostrate su un semplice esempio di grafo non diretto con 4 nodi e 3 archi. In questo esempio si puo vedere il modo in cui le ettichete si propagano ad ogni iterazione attraverso i colori. \par
+			\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{colorsexample}	
+
+			I componenti che compongono l'interfaccia di visualizzazione della rete sono:
+			\begin{itemize}
+			\item \textbf{La bara di controllo} \par
+			Questo componenente contiene tutte le modalita che si possono usare per controllare la visualizzazione della rete. \par
+			Iniziando da sinistra e andando verso destra, la bara di controllo contiene per prima cosa un rettangolo con dei tasti per controllare l'iterazione corrente che viene visualizzata, assieme alla iterazione che viene considerata finale dall'algoritmo (nel caso dell'esempio colori, il parametro p viene fissato a 0.1). \par
+			\includegraphics[width=\textwidth, height=\textheight, keepaspectratio]{iterationcontrol}
+
+			La seconda parte della bara di controllo viene utilizzata per cambiare il modo di selezione nodo e per cercare un nodo specifico nella rete. Se si preme il tasto per cambiare il modo di selezione nodo, si puo selezionare un secondo nodo, in modo che, ulteriormente, si possono comparare i vettori di ettichete dei due nodi specifici. La bara di ricerca di un nodo specifico diventa molto utile nel caso in cui la rete utilizzata ha molti nodi e quindi dove la selezione del nodo dalla rete diventa difficile. \par
+			\includegraphics[width=\textwidth, height=\textheight, keepaspectratio]{nodeselection}
+
+			L'ultima parte della bara di controllo contiene alcuni controlli per cambiare il layout di visualizzazione e alcuni tasti per: catturare la configurazione corrente dell'applicazione, scaricare il file dei risultati, scaricare il file contenente i dettagli del grafo e scaricare un file contenente la comparazione tra due nodi selezionati. Le opzioni per cambiare la configurazione dell'applicazione sono: Show VL View (che viene utilizzato per nascondere o per visualizzare la View che presenta graficamente la configurazione dei vettori d'ettichete), Show Community View (che viene utilizzato per nascondere o per visualizzare la View che presenta graficamente la divisione in communita della rete), Show Info Bar (che viene utilizzato per nascondere e far comparire la bara laterale che presenta le informazioni sulla rete, o sui nodi selezionati) e Show Ids (che viene utilizzato per nascondere o per visualizzare gli ID all'interno di ogni nodo in una View). \par
+
+			\includegraphics[width=\textwidth, height=\textheight, keepaspectratio]{viewcontrol}
+
+			\item \textbf{VL View} \par
+			La VL View rappresenta la vista che visualizza la rete dal punto di vista dei vettori delle ettichete. Tutti i belonging coefficient sommano a 1 e quindi ogni etticheta viene rappresentata da un colore che occupa la percentuale specifica sul nodo (per esempio se un'etticheta su un nodo ha il belonging coefficient uguale a 0.5, allora il colore di quell'etticheta occupera 50\% del nodo nella VL View). \par
+
+			\includegraphics[width=\textwidth, height=\textheight, keepaspectratio]{vlview}
+
+			\item \textbf{Community View} \par
+			La Community View rappresenta la vista che visualizza la rete dal punto di vista delle communita che compongono la rete. I nodi che si trovano nella stessa communita avrano lo stesso colore, in modo da identificare facilmente i nodi appartenenti alla stessa communita dal punto di vista strutturale. La communita di ogni nodo puo essere conosciuta dalle informazioni specifiche di ogni nodo, quando esso viene selezionato. \par	
+
+			\includegraphics[width=\textwidth, height=\textheight, keepaspectratio]{comview}
+
+			\item \textbf{Info Bar} \par
+			La Info Bar visualizza, nel caso nessun nodo viene selezionato, le informazioni generali riguardanti la rete, come tipo di rete, numero di nodi, numero di archi e diametro. Nel caso in cui un nodo viene selezionato, la bara delle informazioni mostra il grado di quel nodo, la communita appartenente, assieme al suo colore e il vettore delle ettichete coi belonging coefficient di ogni etticheta, assieme al colore dell'etticheta. Nel caso in cui due nodi vengono selezionati, ci saranno due bare di informazioni che mostrano le stesse informazioni di prima per entrambi i nodi. \par
+
+			\begin{center}
+				\includegraphics[width=0.3\linewidth]{infobargeneral}
+				\includegraphics[width=0.22\linewidth]{infobar1}
+				\includegraphics[width=0.3\linewidth]{infobar2}
+			\end{center}
+			\end{itemize}
+			
+			\subsubsection{Pagina Caricamento Reti Sociali Personalizzate}
+			Nel caso della pagina di upload delle reti sociali personalizzate, l'utente puo caricare i suoi dataset personali, formattati in un formato descritto nella pagina stessa, e visualizzare i risultati di AVPRA sulla sua rete. \par
+			L'utente ha la possibilita di personalizzare diverse opzioni riguardanti l'interpretazione dei dati e i parametri con cui l'algoritmo sara eseguito. \par
+			I file riguardanti la rete che l'utente puo caricare sull'applicazione sono i seguenti:
+			\begin{itemize}
+				\item Il file degli archi che dev'essere un file .csv col seguente formato: \par
+				\begin{equation}
+				\dots \\
+				nodo1\ nodo2\ \{ peso \} \\
+				\dots
+				\end{equation}
+
+				Questo formato mostra che il nodo1 e collegato al nodo2 e che l'arco ha il peso specificato. Il peso e opzionale e quindi il file puo essere definito anche nel seguente modo: \par
+				\begin{equation}
+				\begin{aligned}
+				\dots \\
+				nodo1\  nodo2 \\
+				nodo2\  nodo4 \\
+				\dots
+				\end{aligned}
+				\end{equation}				
+
+				\item Il file dei vettori delle ettichete con cui i nodi vengono inizializzati. \par
+				Questo file dev'essere un file .csv col seguente formato: \par
+				\begin{equation}
+				\begin{aligned}
+				b_1(l_1);\ b_1(l_2);\ \dots;\ b_1(l_k) \\
+				b_2(l_1);\ b_2(l_2);\ \dots;\ b_2(l_k) \\
+				b_3(l_1);\ b_3(l_2); \dots;\ b_3(l_k) \\
+				\dots
+				\end{aligned}
+				\end{equation}
+				
+				In questo caso $b_1, b_2, b_3, \dots$ sono le funzioni del belonging coefficient dei nodi $1, 2, 3, \dots$ e $l_1, l_2, \dots, l_k$ sono le ettichete della rete. Tutti i valori di ogni riga devono sommare a 1. \par
+				
+				\item Il file dei nomi delle ettichete che dev'essere un file .csv col seguente formato: \par
+				\begin{equation}
+				l_1;\ l_2;\ l_3;\ l_4;\ \dots
+				\end{equation}
+
+				\item Il file dei colori con cui vengono rappresentate le ettichete. \par
+				Questo file dev'essere un file .csv che ha il seguente formato: \par
+				\begin{equation}
+				hex_1;\ hex_2; \dots
+				\end{equation}
+				In questo formato $hex_1, hex2, \dots$ sono i codici essadecimali dei colori con cui saranno rappresentate le ettichete $l_1, l_2, \dots$ nella visualizzazione. \par
+				Un'esempio del formato di questo file e: \par
+				\begin{equation}
+				\#433A3F;\ \#404A56;\ \#3D5A6C;\ \#58827E;\ \#659687; \dots
+				\end{equation}
+			\end{itemize}
+			Le opzioni che l'utente puo scegliere sono le seguenti:
+			\begin{itemize}
+				\item Grafo diretto o non diretto \par
+				Quest'opzione permette all'utente di scegliere se il grafo costruito dal file degli archi viene interpretato come un grafo diretto o non diretto.
+				\item Propagazione ettichete dai predecessori o successori \par
+				Quest'opzione permette all'utente di scegliere se la propagazione delle ettichete viene influenzata dagli nodi entranti o dagli nodi uscenti. Nel caso in cui il grafo viene interpretato come un grafo non diretto, quest'opzione non e disponibile.
+				\item Negligibly Threshold \par
+				Quest'opzione permette all'utente di scegliere il valore del parametro negligibly threshold associato all'algoritmo, da cui dipende l'iterazione finale dell'algoritmo.
+				\item Numero di iterazioni \par
+				Quest'opzione permette all'utente di scegliere il numero di iterazioni per cui l'algoritmo sara eseguito.
+				\item Formula per il peso nella funzione di aggiornamento \par
+				Quest'opzione permette all'utente di scegliere una formula (dipendente dal numero di vicini del nodo) per i pesi nella funzione di aggiornamento dell'algoritmo AVPRA.
+			\end{itemize}
+			
+			\subsubsection{Esempio Personalizzato}
+			
+\chapter{Conclusioni}
+
+%
+%			BIBLIOGRAFIA
+%
+\begin{thebibliography}{0}
+%
+\bibitem{mapequationsite}
+https://www.mapequation.org/infomap/
+
+\bibitem{mapequationnavigatorsite}
+https://www.mapequation.org/navigator/
+
+\bibitem{snaintro}
+https://towardsdatascience.com/social-network-analysis-from-theory-to-applications-with-python-d12e9a34c2c7
+
+\bibitem{avpra}
+Valerio Bellandi, Paolo Ceravolo, Ernesto Damiani, and Samira Maghool: Agent-based Vector-label Propagation for Explaining Social Network Structures. In: Springer Verlag (Lecture Notes in Communications in Computer and Information Science (CCIS)) (2022)
+
+\bibitem{raghavan}
+Raghavan, U.N., Albert, R., Kumara, S.: Near linear time algorithm to detect
+community structures in large-scale networks. Physical review E 76(3), 036106
+(2007)
+
+\bibitem{componentireact}
+https://it.reactjs.org/docs/react-component.html
+
+\bibitem{tipicomponenti}
+https://it.reactjs.org/docs/components-and-props.html
+
+\bibitem{statoreact}
+https://it.reactjs.org/docs/state-and-lifecycle.html
+
+\bibitem{jsxreact}
+https://it.reactjs.org/docs/introducing-jsx.html
+
+\bibitem{hooksreact}
+https://it.reactjs.org/docs/hooks-intro.html
+
+\bibitem{typescript}
+https://www.typescriptlang.org/
+
+\bibitem{typescripthandbook}
+https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes-func.html
+
+\bibitem{nextjs}
+https://nextjs.org/learn/foundations/about-nextjs/what-is-nextjs
+
+\bibitem{d3js}
+https://d3js.org/
+
+\bibitem{katex}
+https://www.npmjs.com/package/katex
+
+\bibitem{tailwindcss}
+https://tailwindcss.com/
+
+\bibitem{flaskforeword}
+https://flask.palletsprojects.com/en/2.1.x/foreword/
+
+\bibitem{flask}
+https://flask.palletsprojects.com/en/2.1.x/
+
+\bibitem{sympy}
+https://www.sympy.org/en/index.html
+
+\bibitem{cdlib}
+https://cdlib.readthedocs.io/en/latest/
+%
+\end{thebibliography}
+% 
+\end{document}
+
+
+ 
