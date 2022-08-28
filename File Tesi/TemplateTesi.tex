@@ -12,11 +12,23 @@
 \usepackage{tesi}
 \usepackage{makeidx}
 \usepackage{caption, float}
+\usepackage{subfig}
 \usepackage{indentfirst}
+\usepackage{algorithmic}
+\usepackage{listings,xcolor}
 
 % per le accentate
 \usepackage[utf8]{inputenc}
+
 \begin{document}
+% per json
+\lstset{
+	string=[s]{"}{"},
+	stringstyle=\color{blue},
+	comment=[l]{:},
+	commentstyle=\color{black}
+}
+
 \setcounter{secnumdepth}{5}
 \setcounter{tocdepth}{5}
 
@@ -38,10 +50,22 @@ Ringrazio anche la mia famiglia, che mi ha sostenuto per tutto questo tempo.
 % 
 %		
 \chapter{Introduzione}
+
+Il documento e diviso in quattro capitoli:
+\begin{itemize}
+\item il primo capitolo introduce la nozione di Social Network Analysis, definisce alcuni termini usati spesso in questo ambito, descrive il Label Propagation e da una descrizione dell'algoritmo su cui si basa il progetto descritto di seguito nel documento.
+
+\item il secondo capitolo offre una comparazione tra l'applicazione sviluppata e altre applicazioni simili per poi andare a descrivere le tecnologie con cui e stata sviluppata l'applicazione. Il capitolo finisce presentando e descrivendo il funzionamento dell'applicazione.
+
+\item il terzo capitolo parla del modo in cui l'applicazione potrebbe evolvere nel futuro e del modo in cui l'applicazione puo essere resa disponibile attraverso il deployment.
+
+\item l'ultimo capitolo descrive le conclusioni a cui si e arrivato dopo il sviluppo dell'applicazione.
+
+\end{itemize}
 %/
 %
 
-\chapter{Social Network Analysis (da aggiungere piu informazioni a ogni sezione)}
+\chapter{Social Network Analysis}
 	La Social Network Analysis e l'analisi delle strutture sociali attraverso le reti e la teoria dei grafi. \cite{snaintro}
 	Grazie ad una rappresentazione astratta, dove le connessioni tra certi elementi di un sistema, chiamati anche nodi o agenti (quando sono capaci di fare scelte o azioni attive), la SNA puo essere applicata a una varieta di domini. Il comportamento del sistema, in termini di communicazione, propagazione ed evoluzione delle connessioni e catturato da metriche di SNA. \cite{avpra}
 
@@ -52,38 +76,42 @@ Ringrazio anche la mia famiglia, che mi ha sostenuto per tutto questo tempo.
 
 	Gli archi sono le connessioni tra i nodi che possono avere a loro volta delle proprieta (per esempio un peso o un'altro tipo di relazione tra i nodi collegati alle estremita dell'arco).	\cite{snaintro} 
 
+	\section{Communita}
+	Una proprieta fondamentale di molte reti e la struttura a communita, che rappresenta la tendenza dei nodi di essere aggregati in gruppi distinti, o \textbf{communita}, in modo che gli archi tra nodi appartenenti alla stessa communita sono densi, ma gli archi tra nodi appartenenti a communita diverse sono sparsi. \cite{gregory}
 
 	\section{Label Propagation}
 	Label Propagation rappresenta una famiglia di algoritmi usati per preddire le ettichete dei nodi di una rete. 
 	Differisce da altri algoritmi di Social Network Analysis siccome, invece di adottare una visione globale della rete, le decisioni prese dall'algoritmo sono fatte rispetto a proprieta locali, quindi gli algoritmi di Label Propagation adottano una visione locale della rete. \cite{raghavan} 
 
-	L'idea generale e che le ettichete assegnate inizialmente ai nodi sono propagate attraverso la rete seguendo gli archi. La propagazione di un'etticheta a un nodo si basa sulle ettichete dei suoi vicini, tipicamente a un salto di distanza. Molteplici iterazioni permettono il raggiungimento di un'approssimazione del ottimo globale partendo da un ottimo locale. La complessita temporale varia tra tempo lineare ed esponenziale, dipendendo dalla densita della rete. L'approccio e naturalmente decentralizato, con passaggi singoli su ogni nodo ad ogni iterazione. \cite{avpra}
+	L'idea generale e che le ettichete assegnate inizialmente ai nodi sono propagate attraverso la rete seguendo gli archi. La propagazione di un'etticheta a un nodo si basa sulle ettichete dei suoi vicini, tipicamente ad un salto di distanza. Molteplici iterazioni permettono il raggiungimento di un'approssimazione del ottimo globale partendo da un ottimo locale. La complessita temporale varia tra tempo lineare ed esponenziale, dipendendo dalla densita della rete. L'approccio e naturalmente decentralizato, con passaggi singoli su ogni nodo ad ogni iterazione. \cite{avpra}
 	
 	\section{Algoritmi di Label Propagation}
-	La scelta principale che differenzia i diversi algoritmi di Label Propagation e legata alla Update Rule. Alcune varianti della Update Rule che sono state usate nel tempo sono: il grado dei nodi, il coefficiente di clustering e la similarita strutturale.
+	La scelta principale che differenzia i diversi algoritmi di Label Propagation e legata alla funzione di aggiornamento. Alcune varianti della funzione di aggiornamento che sono state usate nel tempo sono: il grado dei nodi, il coefficiente di clustering e la similarita strutturale.
 
 	La limitazione principale degli algoritmi precedenti era l'impossibilita di scegliere piu di un'etticheta per ogni nodo. 
 
-	Gli algoritmi sono stati generalizzati per permettere l'identificazione di communita sovrapposte. Ogni etticheta viene pesata con un belonging coefficient associato al nodo. Tutti i belonging coefficient di un nodo sommano a 1. 
+	Gli algoritmi sono stati generalizzati per permettere l'identificazione di communita sovrapposte. Ogni etticheta viene pesata con un belonging coefficient associato al nodo. 
 
-	\section{Belonging Coefficient}
-	Da scrivere	
+	\section{Belonging Coefficient / Coefficiente di appartentenza}
+	Il belonging coefficient (o coefficiente di appartenenza) indica quanto forte e l'appartenenza di un nodo $x$ a una communita. La somma di tutti i belonging coefficient di un nodo sommano a 1. \cite{gregory}
 
-	\section{AVPRA (Agent-based Vector-label PRopagation Algorithm)}
-	AVPRA e un'algoritmo di Label Propagation basato su un'organizzazione ad agenti che permette di implementare la regola di update rispetto a piu fattori, come per esempio le proprieta di dominio. 
+	\section{AVPRA}
+	AVPRA (o Agent-based Vector-label PRopagation Algorithm) e un'algoritmo di Label Propagation basato su un'organizzazione ad agenti che permette di implementare la regola di update rispetto a piu fattori, come per esempio le proprieta di dominio. 
 
-	AVPRA differisce dagli altri algoritmi tramite il fatto che l'output dell'algoritmo e un vettore compatibile col formato di input usato in maggior parte degli algoritmi di Machine Learning. Il vettore ha una lunghezza fissata per tutti gli nodi e include tutte le label della rete assieme al loro belonging coefficient basato sulle proprieta strutturali della rete. 
+	AVPRA differisce dagli altri algoritmi tramite il fatto che l'output dell'algoritmo e un vettore compatibile col formato di input usato in maggior parte degli algoritmi di \textbf{Machine Learning}. Il vettore ha una lunghezza fissata per tutti gli nodi e include tutte le label della rete assieme al loro belonging coefficient basato sulle proprieta strutturali della rete. 
 
 	Il belonging coefficient nel caso di AVPRA rappresenta una misura di diffusione/accumulo delle ettichete dei nodi, dipendente dalla distanza rispetto ad altri nodi e la loro frequenza. \cite{avpra} 
 
 		\subsection{Propagazione basata su agenti}
-		Consideriamo che le ettichete possono scorrere nella rete e gli agenti possono tenere conto della loro incidenza. Gli agenti sono semi-intelligenti e agiscono rispetto alla situazione riscontrata. Possono adottare diverse strategie nella ricezione o rifiuto di un'etticheta che scorre da un nodo vicino, in concordanza con certe condizioni. In questo modo, l'algoritmo puo controllare gli effetti globali, come per esempio la condizione di terminazione.
+		Consideriamo che le ettichete possono scorrere nella rete e gli agenti possono tenere conto della loro incidenza/frequenza. Gli agenti sono semi-intelligenti e agiscono rispetto alla situazione riscontrata. Possono adottare diverse strategie nella ricezione o rifiuto di un'etticheta che scorre da un nodo vicino, in concordanza con certe condizioni. In questo modo, l'algoritmo puo controllare gli effetti globali, come per esempio la condizione di terminazione.
 
 		\subsection{Aggiornamento sincrono}
-		Per agirare i conflitti nella propagazione degli aggiornamenti, in AVPRA gli agenti sono aggiornati in modo asincrono. Il vettore delle ettichete di un certo nodo a tempo $t$ sara ottenuto dai vettori delle ettichete dei vicini a tempo $t-1$. In questo modo tutti gli agenti possono aggiornarsi simultaneamente.
+		Per agirare i conflitti nella propagazione degli aggiornamenti, in AVPRA gli agenti sono aggiornati in modo sincrono. Il vettore delle ettichete di un certo nodo a tempo $t$ sara ottenuto dai vettori delle ettichete dei vicini a tempo $t-1$. In questo modo tutti gli agenti possono aggiornarsi simultaneamente.
 	
 		\subsection{Inizializzazione}
-		Ogni agente viene ettichetato con un vettore di $d$ dimensioni dove $d$ e la cardinalita dell'insieme $L$, dove $L$ e l'insieme delle ettichete uniche nella rete. 
+		Ogni agente viene ettichetato con un vettore di $d$ dimensioni dove $d$ e la cardinalita dell'insieme $L$ e dove $L$ e l'insieme delle ettichete uniche nella rete. Ogni posizione di un vettore di ettichete di un nodo $x$ viene assegnata a ogni etticheta dell'insieme $L$ e nel vettore di ettichete vengono memorizzati i belonging coefficient del nodo $x$ rispetto a tutte le ettichete. 
+		
+		L'unico requisito dell'inizializzazione e che i vettori di ettichete assegnati ai nodi della rete riflettino proprieta reali dei nodi che agiscono come agenti. \cite{avpra}
 
 		\subsection{Funzione di aggiornamento}
 		La regola di aggiornamento mostra il modo in cui i vettori di ettichete sono aggiornati ad ogni iterazione. In AVPRA, la funzione di aggiornamento e:
@@ -91,21 +119,132 @@ Ringrazio anche la mia famiglia, che mi ha sostenuto per tutto questo tempo.
 		VL_i [l] (t) = w_1 VL_i [l] (t-1) + w_2 \sum_{j \in \Gamma(i)} VL_j [l](t-1)
 		\end{equation}
 
-		Dove $VL_i[l](t)$ rappresenta il valore del belonging coefficient dell'etticheta $l$ nel nodo $n_i$ al tempo $t$, $w_1$ rappresenta il peso delle ettichete correntemente assegnate al nodo $n_i$, $w_2$ rappresenta il peso delle ettichete correntemente assegnate ai nodi $\Gamma(i)$ e $\Gamma(i)$ sono i vicini del nodo $n_i$.
+		Dove $VL_i[l](t)$ rappresenta il valore del belonging coefficient dell'etticheta $l$ nel nodo $n_i$ al tempo $t$, $w_1$ rappresenta il peso delle ettichete correntemente assegnate al nodo $n_i$, $w_2$ rappresenta il peso delle ettichete correntemente assegnate ai nodi $\Gamma(i)$ e $\Gamma(i)$ sono i vicini del nodo $n_i$. \cite{avpra}
+
+		\subsection{Algoritmo}
+
+		\begin{algorithmic}
+			\REQUIRE Matrice di adiancenza $A_{i, j}$, attributi iniziali in vettori di ettichete di $d$ dimensioni per ogni agente
+
+			\FOR{$t$ in Tempi}
+
+				\STATE \COMMENT{Iterazione su tutti gli agenti $i$ della rete}
+
+				\FOR{$i$ in $A_{i, j}$}
+					
+					\STATE \COMMENT{Iterazione su ogni etichetta del agente $i$}
+
+					\FOR{$k$ in $VL_i$}
+
+						\STATE \COMMENT{Se $j$ e un vicino di $i$, si esegue la funzione di aggiornamento}
+
+						\IF{$A_{i, j}$ == 1}
+							\STATE $VL_i[k] = FunzioneAggiornamento(VL_i[k], VL_j[k])$
+
+						\ENDIF
+					\ENDFOR
+				\ENDFOR	
+			\ENDFOR
+		\end{algorithmic}
 
 		\subsection{Iterazione Finale}
-		L'algoritmo AVPRA finisce quando il sistema raggiunge un'iterazione s nella quale i vettori di ettichete sono stazionari. Cio implica che le variazioni dei belonging coefficient devono essere minori di un parametro p che viene chiamato negligibly threshold. 
-		
+		L'algoritmo AVPRA finisce quando il sistema raggiunge un'iterazione $s$ nella quale tutti i vettori di ettichete sono rimasti stazionari per almeno un numero fissato di iterazioni prima. Il stazionamento implica che le variazioni dei coefficienti di appartenenza devono essere minori di un parametro $p$ che viene chiamato soglia di trascuramento.  \cite{avpra}
 
+		La varianza ad un tempo $t$ (dove $t > 0$) per un nodo $i$ si calcola usando la formula seguente:
+		
+		\begin{equation}
+			Var_i(t) = \frac{\sum_{l \in Ettichete} (VL_i[l](t) - VL_i[l](t-1))}{k}
+		\end{equation}
+
+		Dove $k$ rappresenta il numero di ettichete uniche della rete, $Ettichete$ e l'insieme di ettichete della rete e $VL_i[l](t)$ e il valore del coefficiente di appartenenza dell'etticheta $l$ al nodo $i$ a tempo $t$.
+
+		Nell'esempio sottostante si puo osservare come l'iterazione finale e la 4 siccome la variazione tra i vettori di ettichete dell'iterazione 4 e quegli dell'iterazione 3 e minore della soglia di trascuramento (di $0.1$ in questo caso), e siccome lo stazionamento e avvenuto anche nelle 2 iterazioni anteriori.
+		\begin{center}
+			\begin{figure}[H]
+				\centering
+				\subfloat[\centering Vettore ettichete del nodo 1 a tempo 0]{{\includegraphics[width=0.2\linewidth,keepaspectratio]{node1vlt0}}}
+				\qquad
+				\subfloat[\centering Vettore ettichete del nodo 2 a tempo 0] {{\includegraphics[width=0.2\linewidth,keepaspectratio]{node2vlt0}}}
+				\qquad
+				\subfloat[\centering Vettore ettichete del nodo 3 a tempo 0]{{\includegraphics[width=0.2\linewidth,keepaspectratio]{node3vlt0}}}
+				\qquad
+				\subfloat[\centering Vettore ettichete del nodo 4 a tempo 0]{{\includegraphics[width=0.2\linewidth,keepaspectratio]{node4vlt0}}}
+
+				\caption{Vettori di ettichete a tempo 0}
+			\end{figure}
+		\end{center}
+
+		\begin{center}
+			\begin{figure}[H]
+				\centering
+				\subfloat[\centering Vettore ettichete del nodo 1 a tempo 1]{{\includegraphics[width=0.2\linewidth,keepaspectratio]{node1vlt1}}}
+				\qquad
+				\subfloat[\centering Vettore ettichete del nodo 2 a tempo 1] {{\includegraphics[width=0.2\linewidth,keepaspectratio]{node2vlt1}}}
+				\qquad
+				\subfloat[\centering Vettore ettichete del nodo 3 a tempo 1]{{\includegraphics[width=0.2\linewidth,keepaspectratio]{node3vlt1}}}
+				\qquad
+				\subfloat[\centering Vettore ettichete del nodo 4 a tempo 1]{{\includegraphics[width=0.2\linewidth,keepaspectratio]{node4vlt1}}}
+
+				\caption{Vettori di ettichete a tempo 1}
+			\end{figure}
+		\end{center}
+
+		\begin{center}
+			\begin{figure}[H]
+				\centering
+				\subfloat[\centering Vettore ettichete del nodo 1 a tempo 2]{{\includegraphics[width=0.2\linewidth,keepaspectratio]{node1vlt2}}}
+				\qquad
+				\subfloat[\centering Vettore ettichete del nodo 2 a tempo 2] {{\includegraphics[width=0.2\linewidth,keepaspectratio]{node2vlt2}}}
+				\qquad
+				\subfloat[\centering Vettore ettichete del nodo 3 a tempo 2]{{\includegraphics[width=0.2\linewidth,keepaspectratio]{node3vlt2}}}
+				\qquad
+				\subfloat[\centering Vettore ettichete del nodo 4 a tempo 2]{{\includegraphics[width=0.2\linewidth,keepaspectratio]{node4vlt2}}}
+
+				\caption{Vettori di ettichete a tempo 2}
+			\end{figure}
+		\end{center}
+
+		\begin{center}
+			\begin{figure}[H]
+				\centering
+				\subfloat[\centering Vettore ettichete del nodo 1 a tempo 3]{{\includegraphics[width=0.2\linewidth,keepaspectratio]{node1vlt3}}}
+				\qquad
+				\subfloat[\centering Vettore ettichete del nodo 2 a tempo 3] {{\includegraphics[width=0.2\linewidth,keepaspectratio]{node2vlt3}}}
+				\qquad
+				\subfloat[\centering Vettore ettichete del nodo 3 a tempo 3]{{\includegraphics[width=0.2\linewidth,keepaspectratio]{node3vlt3}}}
+				\qquad
+				\subfloat[\centering Vettore ettichete del nodo 4 a tempo 3]{{\includegraphics[width=0.2\linewidth,keepaspectratio]{node4vlt3}}}
+
+				\caption{Vettori di ettichete a tempo 3}
+			\end{figure}
+		\end{center}
+
+
+		\begin{center}
+			\begin{figure}[H]
+				\centering
+				\subfloat[\centering Vettore ettichete del nodo 1 a tempo 4]{{\includegraphics[width=0.2\linewidth,keepaspectratio]{node1vlt4}}}
+				\qquad
+				\subfloat[\centering Vettore ettichete del nodo 2 a tempo 4] {{\includegraphics[width=0.2\linewidth,keepaspectratio]{node2vlt4}}}
+				\qquad
+				\subfloat[\centering Vettore ettichete del nodo 3 a tempo 4]{{\includegraphics[width=0.2\linewidth,keepaspectratio]{node3vlt4}}}
+				\qquad
+				\subfloat[\centering Vettore ettichete del nodo 4 a tempo 4]{{\includegraphics[width=0.2\linewidth,keepaspectratio]{node4vlt4}}}
+
+				\caption{Vettori di ettichete a tempo 4}
+			\end{figure}
+		\end{center}
 \chapter[Il sviluppo dell'applicazione]{Il sviluppo di un applicazione per dimostrare le proprieta dell'algoritmo AVPRA}
-\label{chapter4}
 
 	\section{Applicazioni di visualizzazione delle reti sociali}
-		
+		Tra le pocche applicazioni che visualizzano reti sociali e stato deciso di confrontare l'applicazione creata con un'altra che si comporta in modo simile, ma che non ha la capacita di eseguire l'algoritmo AVPRA sulle reti visualizzate.
+
+		Per ogni applicazione presa in studio viene data una piccola descrizione ed in seguito vengono elecanti \textbf{I Pro} ed \textbf{I Contro} di ogni applicazione.
+
 		\subsection{Visualizzatore Reti Sociali con AVPRA}
 		AVPRA è un'algoritmo di Label Propagation basato su Agenti.
 		Il visualizzatore delle Reti Sociali per AVPRA è un'applicazione web che permette all'utente di
-		eseguire e visualizzare i risultati dell'algoritmo in un modo interattivo nel browser web. \cite{avpra}
+		eseguire e visualizzare i risultati dell'algoritmo in un modo interattivo nel browser web.
 		
 			\subsubsection*{I Pro}
 				\begin{itemize}
@@ -308,23 +447,23 @@ Prima dell’aggiunta dei Hooks, per modificare il stato interno di un component
 			\begin{center}
 			\begin{figure}[H]
 			\centering
-			\includegraphics[width=0.9\linewidth,keepaspectratio]{iterationcontrol}
+			\includegraphics[width=0.8\linewidth,keepaspectratio]{iterationcontrol}
 			\caption{Controlli Iterazione}
 			\end{figure}
 			\end{center}
+
 			La seconda parte della bara di controllo viene utilizzata per cambiare il modo di selezione nodo e per cercare un nodo specifico nella rete. Se si preme il tasto per cambiare il modo di selezione nodo, si puo selezionare un secondo nodo, in modo che, ulteriormente, si possono comparare i vettori di ettichete dei due nodi specifici. La bara di ricerca di un nodo specifico diventa molto utile nel caso in cui la rete utilizzata ha molti nodi e quindi dove la selezione del nodo dalla rete diventa difficile. \par
 			\begin{center}
 			\begin{figure}[H]
 			\centering
-			\includegraphics[width=0.9\linewidth,keepaspectratio]{nodeselection}
+			\includegraphics[width=0.8\linewidth,keepaspectratio]{nodeselection}
 			\caption{Controlli Selezione Nodo}
 			\end{figure}
 			\end{center}
-			L'ultima parte della bara di controllo contiene alcuni controlli per cambiare il layout di visualizzazione e alcuni tasti per: catturare la configurazione corrente dell'applicazione, scaricare il file dei risultati, scaricare il file contenente i dettagli del grafo e scaricare un file contenente la comparazione tra due nodi selezionati. Le opzioni per cambiare la configurazione dell'applicazione sono: Show VL View (che viene utilizzato per nascondere o per visualizzare la View che presenta graficamente la configurazione dei vettori d'ettichete), Show Community View (che viene utilizzato per nascondere o per visualizzare la View che presenta graficamente la divisione in communita della rete), Show Info Bar (che viene utilizzato per nascondere e far comparire la bara laterale che presenta le informazioni sulla rete, o sui nodi selezionati) e Show Ids (che viene utilizzato per nascondere o per visualizzare gli ID all'interno di ogni nodo in una View). 
 
-			Formato Graph Details 
+			L'ultima parte della bara di controllo contiene alcuni controlli per cambiare il layout di visualizzazione e alcuni tasti per: catturare la configurazione corrente dell'applicazione, scaricare il file dei risultati, scaricare il file contenente i dettagli del grafo e scaricare un file contenente la comparazione tra due nodi selezionati. 
 
-			Formato Comparazione nodi 
+			Le opzioni per cambiare la configurazione dell'applicazione sono: Show VL View (che viene utilizzato per nascondere o per visualizzare la View che presenta graficamente la configurazione dei vettori d'ettichete), Show Community View (che viene utilizzato per nascondere o per visualizzare la View che presenta graficamente la divisione in communita della rete), Show Info Bar (che viene utilizzato per nascondere e far comparire la bara laterale che presenta le informazioni sulla rete, o sui nodi selezionati) e Show Ids (che viene utilizzato per nascondere o per visualizzare gli ID all'interno di ogni nodo in una View). 
 
 			\begin{center}
 			\begin{figure}[H]
@@ -333,6 +472,76 @@ Prima dell’aggiunta dei Hooks, per modificare il stato interno di un component
 			\caption{Controlli Vista}
 			\end{figure}
 			\end{center}
+
+			Il formato del file JSON in cui i dettagli della rete viene esportata e il seguente:
+\begin{lstlisting}
+{
+	"directed": ...,
+	"multigraph": ...,
+	"graph": 
+	{
+		"labels": [...],
+		"diameter": ...,
+		"communities": ...,
+		"nodesCount": ...,
+		"edgesCount": ...,
+		"centrality": {
+			"1": ...,
+      			"2": ...,
+			...
+    		},
+    		"timestamps": ...,
+    		"finalTs": ...
+  	},
+	"nodes": 
+	[
+		{
+			"community": ..., 
+			"degree": ..., 
+			"neigh": [...], 
+			"id": ...
+		},
+		...
+  	],
+	"links": [
+		{
+			 "source": ..., 
+			"target": ...
+		},
+		...
+	]
+}
+
+\end{lstlisting}
+
+			Il formato del file JSON in cui la comparazione nodi viene esportata e il seguente:
+
+			\begin{lstlisting}
+{
+	"node1": 
+	{
+		"community": ...,
+		"degree": ...,
+		"neigh": [...],
+		"id": ...,
+		"VL": [...],
+		"betweenness_centrality": ...
+	},
+	"node2": 
+	{
+		"community": ...,
+		"degree": ...,
+		"neigh": [...],
+		"id": ...,
+		"VL": [...],
+		"betweenness_centrality": ...
+	},
+	"cosineSimilarity": ...,
+	"timestamp": ...
+}
+			\end{lstlisting}
+
+
 			\item \textbf{VL View} 
 
 			La VL View rappresenta la vista che visualizza la rete dal punto di vista dei vettori delle ettichete. Tutti i belonging coefficient sommano a 1 e quindi ogni etticheta viene rappresentata da un colore che occupa la percentuale specifica sul nodo (per esempio se un'etticheta su un nodo ha il belonging coefficient uguale a 0.5, allora il colore di quell'etticheta occupera 50\% del nodo nella VL View). 
@@ -344,6 +553,19 @@ Prima dell’aggiunta dei Hooks, per modificare il stato interno di un component
 			\caption{Vista Vettori di ettichete}
 			\end{figure}
 			\end{center}
+
+			\begin{center}
+			\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.8\linewidth,keepaspectratio]{vlrep}
+			\caption{Un nodo nella vista Vettori di ettichete}
+			\label{fig:vlrep}
+			\end{figure}
+			\end{center}
+
+			Nella figura \ref{fig:vlrep} si puo vedere come ad ogni etticheta viene associato un colore vicino al suo nome, e un valore che rappresenta il belonging coeffcient di quell'etticheta per il nodo selezionato, all'iterazione corrente. 
+
+			I colori dentro il nodo sono rappresentati in questo modo siccome l'etticheta \textbf{Red} ha un belonging coefficient di 0.16\dots (quindi 16.6\dots\% del nodo viene riempito col colore rosso), l'etticheta \textbf{Yellow} ha un belonging coefficient di 0.5 (quindi 50\% del nodo viene riempito col colore giallo) e l'etticheta \textbf{Green} ha un belonging coefficient di 0.33\dots (quindi 33.3\dots\% del nodo viene riempito col colore verde).
 
 			\item \textbf{Community View} 
 
@@ -391,9 +613,11 @@ Prima dell’aggiunta dei Hooks, per modificare il stato interno di un component
 				\item Il file degli archi che dev'essere un file .csv col seguente formato: 
 
 				\begin{equation}
+				\begin{aligned}
 				\dots \\
 				nodo1\ nodo2\ \{ peso \} \\
 				\dots
+				\end{aligned}
 				\end{equation}
 
 				Questo formato mostra che il nodo1 e collegato al nodo2 e che l'arco ha il peso specificato. Il peso e opzionale e quindi il file puo essere definito anche nel seguente modo: 
@@ -436,7 +660,7 @@ Prima dell’aggiunta dei Hooks, per modificare il stato interno di un component
 				\begin{equation}
 				hex_1;\ hex_2; \dots
 				\end{equation}
-				In questo formato $hex_1, hex2, \dots$ sono i codici essadecimali dei colori con cui saranno rappresentate le ettichete $l_1, l_2, \dots$ nella visualizzazione. 
+				In questo formato $hex_1, hex_2, \dots$ sono i codici essadecimali dei colori con cui saranno rappresentate le ettichete $l_1, l_2, \dots$ nella visualizzazione. 
 
 				Un'esempio del formato di questo file e: 
 
@@ -466,6 +690,14 @@ Prima dell’aggiunta dei Hooks, per modificare il stato interno di un component
 
 				Quest'opzione permette all'utente di scegliere una formula (dipendente dal numero di vicini del nodo) per i pesi nella funzione di aggiornamento dell'algoritmo AVPRA.
 
+
+				\begin{equation}
+				\label{eqn:weightformula}
+				VL_i [l] (t) = (1-w) VL_i [l] (t-1) + w \sum_{j \in \Gamma(i)} VL_j [l](t-1)
+				\end{equation}
+
+				Nella formula \ref{eqn:weightformula}, il peso che viene scelto dall'utente e $w$. Se l'utente non sceglie un peso personalizzato per $w$, allora $w=\frac{1}{k+1}$ dove $k$ e il numero di di vicini del nodo $i$.
+
 			\end{itemize}
 			
 			\subsubsection{Esempio Personalizzato}
@@ -489,11 +721,6 @@ Prima dell’aggiunta dei Hooks, per modificare il stato interno di un component
 				\centering
 				\includegraphics[width=0.5\linewidth]{infobargeneralcustomundirected}
 				\caption{Barra Informazioni Generale per una rete non diretta}
-				\caption{Barra Informazioni Senza Nodo Selezionato}
-%				\includegraphics[width=0.5\linewidth]{infobar1custom}
-%				\caption{Barra Informazioni con un solo nodo selezionato}
-%				\includegraphics[width=0.3\linewidth]{infobar2custom}
-%				\caption{Barra Informazioni con due nodi selezionati}
 				\end{figure}
 			\end{center}
 
@@ -507,7 +734,15 @@ Prima dell’aggiunta dei Hooks, per modificare il stato interno di un component
 				\end{figure}
 			\end{center}
 \chapter{Sviluppi Futuri}
-	Discussione riguardo il deployment dell'applicazione.
+
+	\section{Deployment}
+
+	Una delle cose che vanno fatte nel futuro e la pubblicazione dell'applicazione web in modo che gli utenti possano utilizzare l'applicazione in modo semplice.
+
+	Il frontend, che e stato sviluppato con l'aiuto di Next.js, puo essere facilmente distribuito attraverso un server Node.js basato, per esempio, su \textbf{AWS EC2} o un \textbf{DigitalOcean Droplet} \cite{nextjsdep}. Un'altro modo molto semplice per la distribuzione del frontend e attraverso \textbf{Firebase Hosting} di \textbf{Google Firebase}, che dopo qualche semplice configurazione, permette la pubblicazione dell'applicazione web in modo gratuito (entro certi limiti d'utilizzo) \cite{firebasehosting}. 
+
+	Il backend, sviluppato usando Flask e scritto in Python, puo essere distribuito usando le \textbf{Google Cloud Functions} di \textbf{Google Firebase}, in modo che ogni endpoint sia collegato a una funzione in cloud che puo essere chiamata dal frontend \cite{googlecloudfunctions}.
+
 \chapter{Conclusioni}
 
 %
@@ -523,6 +758,10 @@ https://www.mapequation.org/navigator/
 
 \bibitem{snaintro}
 https://towardsdatascience.com/social-network-analysis-from-theory-to-applications-with-python-d12e9a34c2c7
+
+\bibitem{gregory}
+Gregory, S.: Finding overlapping communities in networks by label propagation.
+New journal of Physics 12(10), 103018 (2010)
 
 \bibitem{avpra}
 Valerio Bellandi, Paolo Ceravolo, Ernesto Damiani, and Samira Maghool: Agent-based Vector-label Propagation for Explaining Social Network Structures. In: Springer Verlag (Lecture Notes in Communications in Computer and Information Science (CCIS)) (2022)
@@ -576,6 +815,15 @@ https://www.sympy.org/en/index.html
 
 \bibitem{cdlib}
 https://cdlib.readthedocs.io/en/latest/
+
+\bibitem{nextjsdep}
+https://nextjs.org/docs/deployment
+
+\bibitem{firebasehosting}
+https://firebase.google.com/docs/hosting
+
+\bibitem{googlecloudfunctions}
+https://cloud.google.com/functions
 %
 \end{thebibliography}
 % 
