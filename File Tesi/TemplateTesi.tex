@@ -51,6 +51,12 @@ Ringrazio anche la mia famiglia, che mi ha sostenuto per tutto questo tempo.
 %		
 \chapter{Introduzione}
 
+\section{Motivazioni}
+L'applicazione e stata sviluppata per permettere agli utenti interessati di vedere il modo in cui funziona l'algoritmo in un modo visivo e di poter eseguire l'algoritmo in un modo piu facile per gli utenti non esperti. 
+
+Eseguendo l'algoritmo su piu reti si puo vedere il modo in cui AVPRA funziona e il fatto che l'iterazione finale e molto vicina al diametro della rete. Entrambe le informazioni (iterazione finale e diametro della rete) sono visibili nell'applicazione e quindi permettono facilmente di capire quanto sono vicini i due valori.
+
+\section{Divisione Documento}
 Il documento e diviso in quattro capitoli:
 \begin{itemize}
 \item il primo capitolo introduce la nozione di Social Network Analysis, definisce alcuni termini usati spesso in questo ambito, descrive il Label Propagation e da una descrizione dell'algoritmo su cui si basa il progetto descritto di seguito nel documento.
@@ -234,6 +240,9 @@ Il documento e diviso in quattro capitoli:
 				\caption{Vettori di ettichete a tempo 4}
 			\end{figure}
 		\end{center}
+
+		Il numero ottimale di iterazioni per la terminazione dell'algoritmo e molto vicino al diametro della rete. Nel esempio presentato, il diametro della rete e 3 e il tempo finale e 4, quindi il numero di iterazioni neccessarie per la terminazione dell'algoritmo e 4, molto vicino al diametro 3.
+
 \chapter[Il sviluppo dell'applicazione]{Il sviluppo di un applicazione per dimostrare le proprieta dell'algoritmo AVPRA}
 
 	\section{Applicazioni di visualizzazione delle reti sociali}
@@ -734,6 +743,10 @@ Prima dell’aggiunta dei Hooks, per modificare il stato interno di un component
 				\end{figure}
 			\end{center}
 \chapter{Sviluppi Futuri}
+
+	\section{Communita}
+	
+	La sezione riguardante le communita puo essere estesa in modo da permettere l'utilizzo di un modello di Machine Learning per poter riconoscere le communita rispetto ai vettori di ettichete ad ogni iterazione, invece della struttura.
 
 	\section{Deployment}
 
