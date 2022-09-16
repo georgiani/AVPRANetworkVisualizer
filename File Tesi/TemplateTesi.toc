@@ -1,0 +1,24 @@
+\babel@toc {italian}{}
+\babel@toc {italian}{}
+\contentsline {chapter}{Ringraziamenti}{ii}{chapter*.1}%
+\contentsline {chapter}{\numberline {1}Introduzione}{1}{chapter.1}%
+\contentsline {chapter}{\numberline {2}Social Network Analysis}{2}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Cos'è il Social Network Analysis}{2}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Label Propagation}{2}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Algoritmi di Label Propagation}{2}{section.2.3}%
+\contentsline {section}{\numberline {2.4}AVPRA}{2}{section.2.4}%
+\contentsline {chapter}{\numberline {3}Il sviluppo di un applicazione per dimostrare le proprieta dell'algoritmo AVPRA}{5}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Applicazioni di visualizzazione delle reti sociali}{5}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}Visualizzatore Reti Sociali con AVPRA}{5}{subsection.3.1.1}%
+\contentsline {subsection}{\numberline {3.1.2}Infomap Network Navigator}{5}{subsection.3.1.2}%
+\contentsline {section}{\numberline {3.2}Sviluppo}{6}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Funzionalita previste}{6}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}Sviluppo dell'applicazione web}{6}{subsection.3.2.2}%
+\contentsline {subsubsection}{Frontend}{6}{section*.11}%
+\contentsline {subsubsection}{Backend}{6}{section*.12}%
+\contentsline {subsection}{\numberline {3.2.3}Presentazione applicazione}{6}{subsection.3.2.3}%
+\contentsline {subsubsection}{Pagina Principale}{6}{section*.13}%
+\contentsline {subsubsection}{Esempio Colori}{6}{section*.14}%
+\contentsline {subsubsection}{Pagina Caricamento Reti Sociali Personalizzate}{6}{section*.15}%
+\contentsline {subsubsection}{Esempio Personalizzato}{6}{section*.16}%
+\contentsline {chapter}{\numberline {4}Conclusioni}{7}{chapter.4}%
