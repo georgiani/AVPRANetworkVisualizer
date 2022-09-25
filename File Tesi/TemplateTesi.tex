@@ -51,10 +51,13 @@ Ringrazio la mia famiglia, i miei amici e colleghi, che mi hanno sostenuto e aiu
 %		
 \chapter{Introduzione}
 
-\section{Motivazioni}
-L'applicazione è stata sviluppata per permettere agli utenti di vedere il modo in cui funziona l'algoritmo in una maniera visiva e di poter eseguire l'algoritmo in un modo più facile per gli utenti non esperti.
+\section{Obiettivo}
+L'obiettivo di questo documento è quello di descrivere il contesto e lo sviluppo dell'applicazione web che è stata costruita per dimostrare il funzionamento dell'algoritmo di label propagation AVPRA.
 
-Eseguendo l'algoritmo su più reti si può vedere il modo in cui AVPRA funziona e il fatto che l'iterazione finale e molto vicina al diametro della rete. Entrambe le informazioni (iterazione finale e diametro della rete) sono visibili nell'applicazione e permettono quindi di capire facilmente quanto sono vicini i due valori.
+\section{Motivazioni}
+L'applicazione per la visualizzazione delle reti sociali con AVPRA è stata sviluppata per permettere agli utilizzatori di vedere il modo in cui l'algoritmo funziona in una maniera visiva e di poter eseguire l'algoritmo in un modo più facile per gli utenti non esperti.
+
+Eseguendo l'algoritmo su più reti si può vedere il modo in cui AVPRA funziona e il fatto che l'iterazione finale è spesso molto vicina al diametro della rete. Entrambe le informazioni (iterazione finale e diametro della rete) sono visibili nell'applicazione e permettono quindi di capire facilmente quanto sono vicini i due valori.
 
 \pagebreak
 
@@ -67,7 +70,7 @@ Il documento e diviso in quattro capitoli:
 
 \item il terzo capitolo parla del modo in cui l'applicazione potrebbe evolvere nel futuro e del modo in cui l'applicazione può essere resa disponibile attraverso il deployment.
 
-\item l'ultimo capitolo descrive le conclusioni a cui sono arrivato dopo il sviluppo dell'applicazione.
+\item l'ultimo capitolo descrive le conclusioni a cui sono arrivato dopo lo sviluppo dell'applicazione.
 
 \end{itemize}
 %/
@@ -85,7 +88,7 @@ Il documento e diviso in quattro capitoli:
 	Gli archi sono le connessioni tra i nodi che possono avere a loro volta delle proprietà (per esempio un peso o un altro tipo di relazione tra i nodi collegati alle estremità dell'arco).	\cite{snaintro} 
 
 	\section{Comunità}
-	Una proprietà fondamentale di molte reti è la struttura a comunità, che rappresenta la tendenza dei nodi di essere aggregati in gruppi distinti, o \textbf{comunità}, in modo che gli archi tra nodi appartenenti alla stessa comunità sono densi, ma gli archi tra nodi appartenenti a comunità diverse sono sparsi. \cite{gregory}
+	Una proprietà fondamentale di molte reti è la struttura a comunità, che rappresenta la tendenza dei nodi di essere aggregati in gruppi distinti (o \textbf{comunità}) in modo che gli archi tra nodi appartenenti alla stessa comunità siano densi, ma gli archi tra nodi appartenenti a comunità diverse siano sparsi. \cite{gregory}
 
 	\section{Label Propagation}
 	Label Propagation rappresenta una famiglia di algoritmi usati per predire le etichette dei nodi di una rete. 
@@ -98,7 +101,7 @@ Il documento e diviso in quattro capitoli:
 
 	La limitazione principale degli algoritmi precedenti era l'impossibilita di scegliere più di un'etichetta per ogni nodo. 
 
-	Gli algoritmi sono stati generalizzati per permettere l'identificazione di comunità sovrapposte. Ogni etichetta viene pesata con un belonging coefficient associato al nodo. 
+	Gli algoritmi sono stati generalizzati per permettere l'identificazione di comunità sovrapposte. Ogni etichetta viene pesata con un belonging coefficient associato al nodo.  \cite{avpra}
 
 	\section{Belonging Coefficient / Coefficiente di appartenenza}
 	Il belonging coefficient (o coefficiente di appartenenza) indica quanto forte è l'appartenenza di un nodo $x$ a una comunità. Tutti i coefficienti di un nodo sommano a 1. \cite{gregory}
@@ -106,15 +109,17 @@ Il documento e diviso in quattro capitoli:
 	\section{AVPRA}
 	AVPRA (o Agent-based Vector-label PRopagation Algorithm) è un'algoritmo di Label Propagation basato su un'organizzazione ad agenti che permette di implementare la regola di aggiornamento rispetto a più fattori, come per esempio le proprietà di dominio. 
 
-	AVPRA differisce dagli altri algoritmi tramite il fatto che l'output dell'algoritmo è un vettore compatibile col formato di input usato in maggior parte degli algoritmi di \textbf{Machine Learning}. Il vettore ha una lunghezza fissata per tutti i nodi e include tutte le etichette della rete assieme al loro coefficiente di appartenenza (basato sulle proprietà strutturali della rete).
+	AVPRA differisce dagli altri algoritmi tramite il fatto che l'output dell'algoritmo è un vettore compatibile col formato di input usato in maggior parte degli algoritmi di \textbf{Machine Learning}. 
+	
+	Il vettore ha una lunghezza fissata per tutti i nodi e include tutte le etichette della rete assieme al loro coefficiente di appartenenza (basato sulle proprietà strutturali della rete).
 
 	Il coefficiente di appartenenza nel caso dell'algoritmo AVPRA è una misura di diffusione/accumulo delle etichette dei nodi, dipendente dalla distanza rispetto ad altri nodi e dalla loro frequenza. \cite{avpra} 
 
 		\subsection{Propagazione basata su agenti}
-		Consideriamo che le etichette possono scorrere nella rete e che gli agenti possono tenere conto della frequenza di queste. Gli agenti sono semi-intelligenti e agiscono rispetto alla situazione riscontrata. Possono adottare diverse strategie nella ricezione o rifiuto di un'etichetta che scorre da un nodo vicino, in concordanza con certe condizioni. In questo modo, l'algoritmo può controllare gli effetti globali, come per esempio la condizione di terminazione.
+		Consideriamo che le etichette possono scorrere nella rete e che gli agenti possono tenere conto della frequenza di queste. Gli agenti sono semi-intelligenti e agiscono rispetto alla situazione riscontrata. Possono adottare diverse strategie nella ricezione o rifiuto di un'etichetta che scorre da un nodo vicino, in concordanza con certe condizioni. In questo modo, l'algoritmo può controllare gli effetti globali, come per esempio la condizione di terminazione. \cite{avpra}
 
 		\subsection{Aggiornamento sincrono}
-		Per evitare i conflitti nella propagazione degli aggiornamenti, in AVPRA gli agenti sono aggiornati in modo \textbf{sincrono}. Il vettore delle etichette di un certo nodo a tempo $t$ sarà ottenuto dai vettori delle etichette dei vicini a tempo $t-1$. In questo modo tutti gli agenti possono aggiornarsi simultaneamente.
+		Per evitare i conflitti nella propagazione degli aggiornamenti, in AVPRA gli agenti sono aggiornati in modo \textbf{sincrono}. Il vettore delle etichette di un certo nodo a tempo $t$ sarà ottenuto dai vettori delle etichette dei vicini a tempo $t-1$. In questo modo tutti gli agenti possono aggiornarsi simultaneamente. \cite{avpra}
 	
 		\subsection{Inizializzazione}
 		Ogni agente viene etichettato con un vettore di $d$ dimensioni dove $d$ è la cardinalità dell'insieme delle etichette uniche nella rete notato $L$. Ogni posizione di un vettore di etichette di un nodo $x$ viene assegnata a un'etichetta dell'insieme $L$ e nel vettore di etichette vengono memorizzati i coefficienti d'appartenenza del nodo $x$ rispetto a tutte le etichette. 
@@ -131,7 +136,9 @@ Il documento e diviso in quattro capitoli:
 		Dove $VL_i[l](t)$ rappresenta il valore del coefficiente di appartenenza dell'etichetta $l$ nel nodo $n_i$ al tempo $t$, $w_1$ rappresenta il peso delle etichette assegnate al nodo $n_i$ a tempo $t - 1$, $w_2$ rappresenta il peso delle etichette assegnate ai nodi $\Gamma(i)$ a tempo $t - 1$ e $\Gamma(i)$ è l'insieme dei vicini del nodo $n_i$. \cite{avpra}
 
 		\subsection{Algoritmo}
-
+		
+		Di seguito viene presentato il pseudo-codice che rappresenta il funzionamento dell'algoritmo. \cite{avpra}
+ 
 		\begin{algorithmic}
 			\REQUIRE Matrice di adiacenza $A_{i, j}$, attributi iniziali in vettori di etichette di $d$ dimensioni per ogni agente
 
@@ -168,6 +175,7 @@ Il documento e diviso in quattro capitoli:
 		Dove $k$ rappresenta il numero di etichette uniche della rete, $Ettichete$ e l'insieme di etichette della rete e $VL_i[l](t)$ e il valore del coefficiente di appartenenza dell'etichetta $l$ al nodo $i$ a tempo $t$.
 
 		Nell'esempio sottostante si può osservare come l'iterazione finale è la 4 siccome la variazione tra i vettori di etichette dell'iterazione 4 e quelli dell'iterazione 3 e minore della soglia di trascuramento (di $0.1$ in questo caso), e siccome lo stazionamento è avvenuto anche nelle 2 iterazioni anteriori.
+		
 		\begin{center}
 			\begin{figure}[H]
 				\centering
@@ -263,25 +271,23 @@ Il documento e diviso in quattro capitoli:
 					\item Ha tanti parametri che permettono all'utente di controllare il comportamento dell'algoritmo e dell'input.
 					\item Permette l'esportazione della rete e delle informazioni visibili sullo schermo in formato PNG.
 					\item Permette di esportare le informazioni riguardanti il grafo e il output in formato JSON.
-					\item Singoli nodi possono essere selezionati in modo da poter vedere più dettagli e misure riguardanti quel specifico nodo.
+					\item Singoli nodi possono essere selezionati in modo da poter vedere più dettagli e misure riguardanti lo specifico nodo.
 					\item Offre la possibilità di selezionare, comparare ed esportare la comparazione tra due nodi diversi della rete.
 					\item Sopporta la visualizzazione di due viste diverse: Vector Label View (mostra in modo grafico la distribuzione delle label su ogni nodo) e Community View (mostra in modo grafico la divisione della rete in comunità basate sulla struttura.).
 					\item Mostra graficamente la divisione in comunità raggruppando i nodi della stessa comunità più vicini uno all'altro.
-					\item Permette all'utente di eseguire l'algoritmo per più iterazioni e di vedere graficamente l'evoluzioni dei Vector Label nel tempo (feature specifica di AVPRA).
+					\item Permette all'utente di eseguire l'algoritmo per più iterazioni e di vedere graficamente l'evoluzione dei Vector Label nel tempo (feature specifica di AVPRA).
 					\item La paletta di colori utilizzata per i label nei Vector Label può essere modificata usando un'ulteriore file nella fase di caricamento della propria rete.
 					\item Permette all'utente di selezionare un nodo specifico tramite una barra di ricerca dove si può inserire l'id del nodo.
 				\end{itemize}
 						
 			\subsubsection*{I Contro}
 				\begin{itemize}
-					\item Sopporta un solo formato di input (tre file CSV: Lista Archi, Vector Label Iniziali, Nomi Label) e due formati di output (un file pickled contenente i risultati di tutte le iterazioni dell'algoritmo e un file JSON contenente i dati della rete o la comparazione di due nodi diversi).
 					\item I dataset dell'utente e i risultati delle esecuzioni dell'algoritmo su quei dataset sono tenute sul server dell'applicazione, anche se per poco tempo.
 					\item Performance più scarse nel caso venga usato con reti molto grandi.
 				\end{itemize}
 
 		\subsection{Infomap Network Navigator}
-		Infomap è un'algoritmo di clustering su reti basato su Map Equation. Infomap Online è un'applicazione web che permette agli utenti di eseguire
-		l'algoritmo Infomap nel browser web. \cite{mapequationsite} 
+		Infomap è un'algoritmo di clustering su reti basato su Map Equation. Infomap Online è un'applicazione web che permette agli utenti di eseguire l'algoritmo Infomap nel browser web. \cite{mapequationsite} 
 		
 		Infomap Network Navigator è un'applicazione che permette di visualizzare i risultati
 		dell'algoritmo in un modo interattivo. \cite{mapequationnavigatorsite} 
@@ -290,10 +296,9 @@ Il documento e diviso in quattro capitoli:
 				\begin{itemize}
 					\item I dataset dell'utente e i risultati dell'esecuzione dell'algoritmo su quei dataset non sono mantenute sul server di Infomap Online.
 					\item Ha tanti parametri per controllare il comportamento dell'algoritmo, dell'input, del output e dell'accuratezza.
-					\item Sopporta tanti formati di input (Link-List, Pajek, Bipartite, Multilayer, With inter-layer links, Without inter-layer links, States) e tanti formati di output (Phyisical, State-level output, Tree, FTree, Clu, Newick, JSON). Infomap riconosce automaticamente il formato dei file dal header del file.
 					\item Permette di esportare la visualizzazione in formati SVG e PNG.
 					\item Permette l'esportazione del file di output.
-					\item Singoli nodi possono essere selezionati in modo da vedere più dettagli e misure riguardati il specifico nodo.
+					\item Singoli nodi possono essere selezionati in modo da vedere più dettagli e misure riguardati lo specifico nodo.
 					\item Permette all'utente di selezionare un nodo specifico tramite una barra di ricerca.
 					\item Mostra graficamente il raggruppamento dei nodi in comunità e sotto-comunità attraverso un modulo (feature specifica Map Equation).
 				\end{itemize}			
@@ -314,13 +319,25 @@ Il documento e diviso in quattro capitoli:
 		\end{itemize}
 		
 		\subsection{Funzionalità previste}
+			\subsubsection{Frontend}
+				\begin{itemize}
+					\item Deve permettere all'utente di visualizzare in modo interattivo la situazione, alla iterazione corrente, della rete e dei suoi vettori di etichette.
+					\item Deve implementare un modo in cui l'utente possa caricare la sua propria rete.
+					\item Deve dare la possibilità all'utente di avere più informazioni riguardo lo stato corrente di un vettore di etichette di un nodo specifico.
+					\item Deve permettere di avere informazioni riguardo l'iterazione corrente e l'iterazione finale dell'algoritmo.
+					\item Deve implementare un modo in cui si possa andare avanti e indietro tra le iterazioni in modo da vedere l'evoluzione dei vettori di etichette.
+					\item Deve fare possibile la visualizzazione delle comunità associate alla rete.
+					\item Deve permettere di selezionare 2 nodi e di vedere la situazione corrente di entrambi.
+					\item Deve implementare un modo di esportare i file che si possono esportare attraverso l'API esposta dal backend.
+				\end{itemize}		
+		
 			\subsubsection{Backend}
 			\begin{itemize}
-				\item Dev'essere capace di eseguire l'algoritmo AVPRA dato in Python.
+				\item Dev'essere capace di eseguire l'algoritmo AVPRA dato attraverso un script Python.
 				\item Deve esporre un'API che:
 				\begin{itemize}
 					\item permette all'utilizzatore di eseguire l'algoritmo.
-					\item permette all'utilizzatore di controllare i parametri dell'algoritmo come numero di iterazioni, soglia di trascuramento, interpretazione della rete (diretto, non diretto), modo di propagazione delle label (da predecessori, da successori) e formula dei pesi della regola di aggiornamento.
+					\item permette all'utilizzatore di controllare i parametri dell'algoritmo come: numero di iterazioni, soglia di trascuramento, interpretazione della rete (diretto, non diretto), modo di propagazione delle label (da predecessori, da successori) e formula dei pesi della regola di aggiornamento.
 					\item permette di ottenere i dettagli riguardanti un solo nodo ad una certa iterazione.
 					\item permette di ottenere i dettagli riguardanti la relazione tra due nodi ad una certa iterazione.
 					\item permette di esportare i risultati e i dettagli dell'esecuzione in un formato definito.
@@ -328,22 +345,11 @@ Il documento e diviso in quattro capitoli:
 				\end{itemize}
 			\end{itemize}
 
-			\subsubsection{Frontend}
-				\begin{itemize}
-					\item Deve permettere all'utente di visualizzare in modo interattivo la situazione, alla iterazione corrente, della rete e dei suoi vector label.
-					\item Deve implementare un modo in cui l'utente possa caricare la sua propria rete.
-					\item Deve dare la possibilità all'utente di avere più informazioni riguardo lo stato corrente di un vector label di un nodo specifico.
-					\item Deve permettere di avere informazioni riguardo l'iterazione corrente e l'iterazione finale (da definire) dell'algoritmo.
-					\item Deve implementare un modo in cui si possa andare avanti e indietro tra le iterazioni in modo da vedere l'evoluzione dei vector label.
-					\item Deve fare possibile la visualizzazione delle comunità associate alla rete.
-					\item Deve permettere di selezionare 2 nodi e di vedere la situazione corrente di entrambi.
-					\item Deve implementare un modo di esportare i file che si possono esportare attraverso l'API esposta dal backend.
-				\end{itemize}
-
 		\subsection{Sviluppo dell'applicazione web}
 
 			\subsubsection{Frontend}
-			Per lo sviluppo della parte Frontend dell'applicazione, contenente l'interfaccia utente e la comunicazione col backend, sono state utilizzate diverse tecnologie e librerie. \par
+			Per lo sviluppo della parte Frontend dell'applicazione, contenente l'interfaccia utente e la comunicazione col backend, sono state utilizzate diverse tecnologie e librerie. 
+			
 			Le librerie e tecnologie che sono state utilizzate sono presentate di seguito.
 
 			\paragraph*{React.js} \par è una libreria di JavaScript che viene usata per creare in modo facile delle interfacce utente interattive. 
@@ -424,7 +430,7 @@ Prima dell'aggiunta dei Hooks, per modificare il stato interno di un componente 
 
 			Le librerie e tecnologie che sono state utilizzate sono presentate di seguito.
 			
-			\paragraph*{Flask} è un microframework web basato su Python che è stato usato, nel caso presente, per il sviluppo del Backend come un REST API. \cite{flaskforeword}
+			\paragraph*{Flask} è un microframework web basato su Python che è stato usato, nel caso presente, per lo sviluppo del Backend come un REST API. \cite{flaskforeword}
 
 				Flask permette di creare un’API nel modo più semplice possibile, ed è stato scelto come tecnologia di Backend poiché l'algoritmo che viene usato per la elaborazione delle reti è scritto in Python, e quindi la scelta più facile per un linguaggio di Backend era Python. 
 
@@ -459,13 +465,13 @@ Prima dell'aggiunta dei Hooks, per modificare il stato interno di un componente 
 			\caption{Esempio Colori}
 			\end{figure}
 			\end{center}
-			I componenti che compongono l'interfaccia di visualizzazione della rete sono:
-			\begin{itemize}
-			\item \textbf{La bara di controllo} 
+			I componenti che compongono l'interfaccia di visualizzazione della rete sono presentati di seguito.
 
-			Questo componente contiene tutte le modalità che si possono usare per controllare la visualizzazione della rete. 
+			\paragraph*{La barra di controllo} contiene tutte le modalità che si possono usare per controllare la visualizzazione della rete. 
 
-			Iniziando da sinistra e andando verso destra, la bara di controllo contiene per prima cosa un rettangolo con dei tasti per controllare l'iterazione corrente che viene visualizzata, assieme alla iterazione che viene considerata finale dall'algoritmo (nel caso dell'esempio colori, il parametro $p$ viene fissato a 0.1). 
+			Iniziando da sinistra e andando verso destra, la barra di controllo contiene per prima cosa un rettangolo con dei tasti per controllare l'iterazione corrente che viene visualizzata, assieme alla iterazione che viene considerata finale dall'algoritmo (nel caso dell'esempio colori, il parametro $p$ viene fissato a 0.1). 
+			
+			Una delle proprietà dell'algoritmo che viene presentata in questo componente è l'iterazione finale.
 			
 			
 			\begin{center}
@@ -476,7 +482,7 @@ Prima dell'aggiunta dei Hooks, per modificare il stato interno di un componente 
 			\end{figure}
 			\end{center}
 
-			La seconda parte della bara di controllo viene utilizzata per cambiare il modo di selezione nodo e per cercare un nodo specifico nella rete. Se si preme il tasto per cambiare il modo di selezione nodo, si può selezionare un secondo nodo, in modo che, ulteriormente, si possono comparare i vettori di etichette dei due nodi. La bara di ricerca di un nodo specifico diventa molto utile nel caso in cui la rete utilizzata ha molti nodi e quindi dove la selezione del nodo dalla rete diventa difficile. 
+			La seconda parte della barra di controllo viene utilizzata per cambiare il modo di selezione nodo e per cercare un nodo specifico nella rete. Se si preme il tasto per cambiare il modo di selezione nodo, si può selezionare un secondo nodo, in modo che, ulteriormente, si possono comparare i vettori di etichette dei due nodi. La barra di ricerca di un nodo specifico diventa molto utile nel caso in cui la rete utilizzata ha molti nodi e quindi dove la selezione del nodo dalla rete diventa difficile. 
 			
 			\begin{center}
 			\begin{figure}[H]
@@ -486,9 +492,9 @@ Prima dell'aggiunta dei Hooks, per modificare il stato interno di un componente 
 			\end{figure}
 			\end{center}
 
-			L'ultima parte della bara di controllo contiene alcuni controlli per cambiare il layout di visualizzazione e alcuni tasti per: catturare la configurazione corrente dell'applicazione, scaricare il file dei risultati, scaricare il file contenente i dettagli del grafo e scaricare un file contenente la comparazione tra due nodi selezionati (tasto attivo solo nel caso in cui sono stati selezionati già due nodi). 
+			L'ultima parte della barra di controllo contiene alcuni controlli per cambiare il layout di visualizzazione e alcuni tasti per: catturare la configurazione corrente dell'applicazione, scaricare il file dei risultati, scaricare il file contenente i dettagli del grafo e scaricare un file contenente la comparazione tra due nodi selezionati (tasto attivo solo nel caso in cui sono stati selezionati già due nodi). 
 
-			Le opzioni per cambiare la configurazione dell'applicazione sono: Show VL View (che viene utilizzato per nascondere o per visualizzare la View che presenta graficamente la configurazione dei vettori di etichette), Show Community View (che viene utilizzato per nascondere o per visualizzare la View che presenta graficamente la divisione in comunità della rete), Show Info Bar (che viene utilizzato per nascondere e far comparire la bara laterale che presenta le informazioni sulla rete, o sui nodi selezionati) e Show Ids (che viene utilizzato per nascondere o per visualizzare gli ID all'interno di ogni nodo in una View). 
+			Le opzioni per cambiare la configurazione dell'applicazione sono: Show VL View (che viene utilizzato per nascondere o per visualizzare la View che presenta graficamente la configurazione dei vettori di etichette), Show Community View (che viene utilizzato per nascondere o per visualizzare la View che presenta graficamente la divisione in comunità della rete), Show Info Bar (che viene utilizzato per nascondere e far comparire la barra laterale che presenta le informazioni sulla rete, o sui nodi selezionati) e Show Ids (che viene utilizzato per nascondere o per visualizzare gli ID all'interno di ogni nodo in una View). 
 
 			\begin{center}
 			\begin{figure}[H]
@@ -571,9 +577,8 @@ Prima dell'aggiunta dei Hooks, per modificare il stato interno di un componente 
 
 
 \pagebreak
-			\item \textbf{VL View} 
 
-			La VL View rappresenta la vista che visualizza la rete dal punto di vista dei vettori delle etichette. Tutti i belonging coefficient sommano a 1 e quindi ogni etichetta viene rappresentata da un colore che occupa la percentuale specifica sul nodo (per esempio se un'etichetta su un nodo ha il belonging coefficient uguale a 0.5, allora il colore di quell'etichetta occuperà 50\% del nodo nella VL View). 
+			\paragraph*{La VL View} rappresenta la vista che visualizza la rete dal punto di vista dei vettori delle etichette. Tutti i belonging coefficient sommano a 1 e quindi ogni etichetta viene rappresentata da un colore che occupa la percentuale specifica sul nodo (per esempio se un'etichetta su un nodo ha il belonging coefficient uguale a 0.5, allora il colore di quell'etichetta occuperà 50\% del nodo nella VL View). 
 			
 			\begin{center}
 			\begin{figure}[H]
@@ -596,11 +601,9 @@ Prima dell'aggiunta dei Hooks, per modificare il stato interno di un componente 
 
 			I colori dentro il nodo sono rappresentati in questo modo siccome l'etichetta \textbf{Red} ha un belonging coefficient di 0.16\dots (quindi 16.6\dots\% del nodo viene riempito col colore rosso), l'etichetta \textbf{Yellow} ha un belonging coefficient di 0.5 (quindi 50\% del nodo viene riempito col colore giallo) e l'etichetta \textbf{Green} ha un belonging coefficient di 0.33\dots (quindi 33.3\dots\% del nodo viene riempito col colore verde).
 
-\pagebreak
+\pagebreak	
 
-			\item \textbf{Community View} 
-
-			La Community View rappresenta la vista che visualizza la rete dal punto di vista delle comunità che compongono la rete. I nodi che si trovano nella stessa comunità avranno lo stesso colore, in modo da identificare facilmente i nodi appartenenti alla stessa comunità dal punto di vista strutturale. La comunità di ogni nodo può essere conosciuta dalle informazioni specifiche di ogni nodo, quando esso viene selezionato. 
+		\paragraph*{La Community View} rappresenta la vista che visualizza la rete dal punto di vista delle comunità che compongono la rete. I nodi che si trovano nella stessa comunità avranno lo stesso colore, in modo da identificare facilmente i nodi appartenenti alla stessa comunità dal punto di vista strutturale. La comunità di ogni nodo può essere conosciuta dalle informazioni specifiche di ogni nodo, quando esso viene selezionato. 
 
 			\begin{center}
 			\begin{figure}[H]
@@ -608,13 +611,9 @@ Prima dell'aggiunta dei Hooks, per modificare il stato interno di un componente 
 			\includegraphics[width=0.9\linewidth,keepaspectratio]{comview}
 			\caption{Vista comunità}
 			\end{figure}
-			\end{center}
+			\end{center}			
 
-\pagebreak
-
-			\item \textbf{Info Bar} 
-
-			La Info Bar visualizza, nel caso nessun nodo viene selezionato, le informazioni generali riguardanti la rete, come tipo di rete, numero di nodi, numero di archi e diametro. Nel caso in cui un nodo viene selezionato, la bara delle informazioni mostra il grado di quel nodo, la comunità appartenente, assieme al suo colore e il vettore delle etichette coi belonging coefficient di ogni etichetta, assieme al colore dell'etichetta. Nel caso in cui due nodi vengono selezionati, ci saranno due bare di informazioni che mostrano le stesse informazioni di prima per entrambi i nodi. 
+			\paragraph*{La Barra Informazioni} visualizza, nel caso nessun nodo viene selezionato, le informazioni generali riguardanti la rete, come tipo di rete, numero di nodi, numero di archi e diametro. Nel caso in cui un nodo viene selezionato, la barra delle informazioni mostra il grado di quel nodo, la comunità appartenente, assieme al suo colore e il vettore delle etichette coi belonging coefficient di ogni etichetta, assieme al colore dell'etichetta. Nel caso in cui due nodi vengono selezionati, ci saranno due bare di informazioni che mostrano le stesse informazioni di prima per entrambi i nodi. 
 
 			\begin{center}
 				\begin{figure}[H]
@@ -633,7 +632,6 @@ Prima dell'aggiunta dei Hooks, per modificare il stato interno di un componente 
 				\caption{Barra Informazioni con due nodi selezionati}
 				\end{figure}
 			\end{center}
-			\end{itemize}
 			
 			\subsubsection{Pagina Caricamento Reti Sociali Personalizzate}
 			Nel caso della pagina di upload delle reti sociali personalizzate, l'utente può caricare i suoi dataset personali, formattati in un formato descritto nella pagina stessa, e visualizzare i risultati di AVPRA sulla sua rete. 
@@ -743,7 +741,7 @@ Prima dell'aggiunta dei Hooks, per modificare il stato interno di un componente 
 
 			Nel caso dell'esempio personalizzato, l'interfaccia utente e praticamente uguale all'interfaccia presente nell'Esempio Colori, con qualche piccola differenza data dalle opzioni che l'utente ha scelto nella fase di caricamento della rete.
 
-			\paragraph*{La bara di informazioni} si comporta nello stesso modo della bara di informazioni dell'Esempio Colori, ma offre più informazioni generali riguardo la rete caricata sull'applicazione.
+			\paragraph*{La barra di informazioni} si comporta nello stesso modo della barra di informazioni dell'Esempio Colori, ma offre più informazioni generali riguardo la rete caricata sull'applicazione.
 			
 			\begin{center}
 				\begin{figure}[H]
@@ -766,6 +764,8 @@ Prima dell'aggiunta dei Hooks, per modificare il stato interno di un componente 
 \pagebreak
 
 			\paragraph*{La barra di controllo} subisce modifiche solo nella sezione di Controlli Iterazione. In questo caso, il numero massimo delle iterazioni viene sostituito col numero di iterazioni scelto dall'utente durante il caricamento della rete, e l'iterazione finale cambia in modo che il numero d'ordine mostrato sia l'iterazione dove avviene la condizione di terminazione.
+			
+			Anche in questo caso, la proprietà dell'algoritmo che viene mostrata è l'iterazione finale.
 
 			\begin{center}
 				\begin{figure}[H]
@@ -774,6 +774,36 @@ Prima dell'aggiunta dei Hooks, per modificare il stato interno di un componente 
 				\caption{Controlli Iterazione per reti personalizzate}
 				\end{figure}
 			\end{center}
+			
+
+	\section{POPULITE}
+		POPULITE (POPUlist Language in ITalian political Elites) è un dataset in cui ogni nodo rappresenta un politico che appartiene ad un solo partito. I politici possono essere collegati con un arco ed ogni arco $(P, Q)$ ha il significato che il politico $P$ segue e prende influenza dal politico $Q$.
+		
+		\pagebreak
+		\subsection{Risultati}	
+		Di seguito sono presentati dei screenshot che mostrano che, allo stesso modo in cui, strutturalmente, i nodi si aggregano in diverse comunità, anche i vettori di etichette di ogni nodo della stessa comunità sono simili. Dal punto di vista semantico si può vedere come membri dello stesso partito (stesso colore all'iterazione 0) hanno più probabilità di finire nella stessa comunità grazie al fatto che si seguono.
+		
+		\begin{center}
+				\begin{figure}[H]
+				\centering
+				\subfloat[\centering Vista Vettori di Etichette all'iterazione 0]{{\includegraphics[width=0.4\linewidth,keepaspectratio]{populite_vl_view}}}
+				\qquad
+				\subfloat[\centering Vista Vettori di Etichette all'iterazione 5] {{\includegraphics[width=0.43\linewidth,keepaspectratio]{populite_vl_view_5}}}
+				\qquad
+				\subfloat[\centering Vista Comunità]{{\includegraphics[width=0.35\linewidth,keepaspectratio]{populite_community_view}}}
+				\end{figure}
+		\end{center}		
+		
+		\begin{center}
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=0.5\linewidth,keepaspectratio]{iterations}
+				\caption{Controllo Iterazione}
+			\end{figure}
+		\end{center}
+		
+		Il diametro della rete di questo dataset è 5 e come si può vedere dalla sezione di controllo iterazione, l'iterazione finale è la 5, quindi è stato necessario un numero di iterazioni vicino al diametro per arrivare al stazionamento dei vettori di etichette. Nel caso presentato è stato usato una soglia di trascuramento di $0.1$.
+	
 \chapter{Sviluppi Futuri}
 
 	\section{Comunità}
@@ -789,6 +819,21 @@ Prima dell'aggiunta dei Hooks, per modificare il stato interno di un componente 
 	Il backend, sviluppato usando Flask e scritto in Python, può essere distribuito usando le \textbf{Google Cloud Functions} di \textbf{Google Firebase}, in modo che ogni endpoint sia collegato a una funzione in cloud che può essere chiamata dal frontend \cite{googlecloudfunctions}.
 
 \chapter{Conclusioni}
+
+Lo scopo del documento presentato è quello di descrivere lo sviluppo e l'applicazione sviluppata in se.
+
+L'applicazione è stata sviluppata per mostrare alcune proprietà dell'algoritmo AVPRA in un modo più visivo e facile da capire per gli utenti.
+
+Le proprietà che sono state mostrate nell'applicazione sono le seguenti:
+\begin{itemize}
+\item L'iterazione finale dell'algoritmo viene sempre mostrata nella barra di controllo vicino all'iterazione correntemente visualizzata.
+
+\item All'iterazione 0 si può vedere visivamente il modo in cui i vettori di etichette sono inizializzati con un solo belonging coefficient a 1 e il resto a 0. (quest'affermazione non vale nel caso in cui nell'esempio personalizzato viene caricato un file d'inizializzazione che non rispetta questa regola).
+
+\item Ad ogni iterazione si può vedere come i valori dei belonging coefficient all'interno dei vettori di etichette di ogni nodo cambiano in modo corretto rispetto alla regola di aggiornamento coi pesi selezionati.
+
+\item Ad ogni iterazione si può vedere come l'aggiornamento si fa in modo sincrono, poiché, rifacendo i calcoli, i valori risultati ad un tempo $t$ sono calcolati rispetto ai valori del tempo $t-1$.
+\end{itemize}
 
 %
 %			BIBLIOGRAFIA
