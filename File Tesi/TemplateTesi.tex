@@ -1,5 +1,6 @@
 \documentclass[a4paper,12pt]{report}
 
+\pdfminorversion=4
 \usepackage[a4paper]{geometry}
 \usepackage{amssymb,amsmath,amsthm}
 \usepackage{graphicx}
@@ -55,18 +56,18 @@ Ringrazio la mia famiglia, i miei amici e colleghi, che mi hanno sostenuto e aiu
 L'obiettivo di questo documento è quello di descrivere il contesto e lo sviluppo dell'applicazione web che è stata costruita per mostrare il funzionamento dell'algoritmo di label propagation AVPRA.
 
 \section{Motivazioni}
-L'applicazione per la visualizzazione delle reti sociali con AVPRA è stata sviluppata per permettere agli utilizzatori di vedere il modo in cui l'algoritmo funziona in una maniera visiva e di poter eseguire l'algoritmo in un modo più facile per gli utenti non esperti.
+L'applicazione per la visualizzazione delle reti sociali con AVPRA è stata sviluppata per permettere agli utilizzatori di vedere il modo in cui l'algoritmo funziona in una maniera grafica e di poter eseguire l'algoritmo in un modo più facile per gli utenti non esperti.
 
 Eseguendo l'algoritmo su più reti si può vedere il modo in cui AVPRA funziona e il fatto che l'iterazione finale è spesso molto vicina al diametro della rete. Entrambe le informazioni (iterazione finale e diametro della rete) sono visibili nell'applicazione e permettono quindi di capire facilmente quanto sono vicini i due valori.
 
 \pagebreak
 
 \section{Divisione Documento}
-Il documento e diviso in quattro capitoli:
+Il documento é diviso in quattro capitoli:
 \begin{itemize}
 \item il primo capitolo introduce la nozione di \textbf{Social Network Analysis}, definisce alcuni termini usati spesso in questo ambito, descrive il Label Propagation e dà una descrizione dell'algoritmo su cui si basa il progetto descritto di seguito nel documento.
 
-\item il secondo capitolo offre una comparazione tra l'applicazione sviluppata e altre applicazioni simili per poi andare a descrivere le tecnologie con cui è stata sviluppata l'applicazione. Il capitolo finisce presentando e descrivendo il funzionamento dell'applicazione.
+\item il secondo capitolo offre un paragone tra l'applicazione sviluppata e altre applicazioni simili per poi andare a descrivere le tecnologie con cui è stata sviluppata l'applicazione. Il capitolo finisce presentando e descrivendo il funzionamento dell'applicazione.
 
 \item il terzo capitolo parla del modo in cui l'applicazione potrebbe evolvere nel futuro e del modo in cui l'applicazione può essere resa disponibile attraverso il deployment.
 
@@ -172,9 +173,9 @@ Il documento e diviso in quattro capitoli:
 			Var_i(t) = \frac{\sum_{l \in Ettichete} (VL_i[l](t) - VL_i[l](t-1))}{k}
 		\end{equation}
 
-		Dove $k$ rappresenta il numero di etichette uniche della rete, $Ettichete$ e l'insieme di etichette della rete e $VL_i[l](t)$ e il valore del coefficiente di appartenenza dell'etichetta $l$ al nodo $i$ a tempo $t$.
+		Dove $k$ rappresenta il numero di etichette uniche della rete, $Ettichete$ é l'insieme di etichette della rete e $VL_i[l](t)$ é il valore del coefficiente di appartenenza dell'etichetta $l$ al nodo $i$ a tempo $t$.
 
-		Nell'esempio sottostante si può osservare come l'iterazione finale è la 4 siccome la variazione tra i vettori di etichette dell'iterazione 4 e quelli dell'iterazione 3 e minore della soglia di trascuramento (di $0.1$ in questo caso), e siccome lo stazionamento è avvenuto anche nelle 2 iterazioni anteriori.
+		Nell'esempio sottostante si può osservare come l'iterazione finale è la 4 siccome la variazione tra i vettori di etichette dell'iterazione 4 e quelli dell'iterazione 3 é minore della soglia di trascuramento (di $0.1$ in questo caso), e siccome lo stazionamento è avvenuto anche nelle 2 iterazioni anteriori.
 		
 		\begin{center}
 			\begin{figure}[H]
@@ -252,12 +253,12 @@ Il documento e diviso in quattro capitoli:
 			\end{figure}
 		\end{center}
 
-		Il numero ottimale di iterazioni per la terminazione dell'algoritmo è molto vicino al diametro della rete. Nel esempio presentato, il diametro della rete è 3 e il tempo finale è 4, quindi il numero di iterazioni necessarie per la terminazione dell'algoritmo è 4, molto vicino al diametro 3.
+		Il numero ottimale di iterazioni per la terminazione dell'algoritmo è molto vicino al diametro della rete. Nel esempio presentato, il diametro della rete è 3 e l'iterazione finale è 4, quindi il numero di iterazioni necessarie per la terminazione dell'algoritmo è 4, molto vicino al diametro 3.
 
 \chapter[Lo sviluppo dell'applicazione]{Lo sviluppo di un'applicazione per dimostrare le proprietà dell'algoritmo AVPRA}
 
 	\section{Applicazioni di visualizzazione delle reti sociali}
-		Tra le poche applicazioni che visualizzano reti sociali è stato deciso di confrontare l'applicazione creata con un'altra che si comporta in modo simile, ma che non ha la capacita di eseguire l'algoritmo AVPRA sulle reti visualizzate.
+		Tra le poche applicazioni che visualizzano reti sociali è stato deciso di confrontare l'applicazione creata con un'altra che si comporta in modo simile, ma che non ha la capacità di eseguire l'algoritmo AVPRA sulle reti visualizzate.
 
 		Per ogni applicazione presa in studio viene data una piccola descrizione ed in seguito vengono elencati \textbf{I Pro} ed \textbf{I Contro} di ogni una.
 
@@ -443,7 +444,7 @@ Prima dell'aggiunta dei Hooks, per modificare il stato interno di un componente 
 		\subsection{Presentazione applicazione}
 			
 			\subsubsection{Pagina Principale}
-			La pagina principale serve per permettere all'utente di scegliere tra due modi di diversi di provare e visualizzare i risultati dell'algoritmo. Ogni modo ha una piccola descrizione del come funziona e un tasto per andare alla pagina specifica per quella modalità. Ogni modalità sarà descritta in dettaglio nelle sezioni successive.
+			La pagina principale serve per permettere all'utente di scegliere tra due modi diversi di provare e visualizzare i risultati dell'algoritmo. Ogni modo ha una piccola descrizione del come funziona e un tasto per andare alla pagina specifica per quella modalità. Ogni modalità sarà descritta in dettaglio nelle sezioni successive.
 
 			\begin{center}
 			\begin{figure}[H]
@@ -783,24 +784,24 @@ Prima dell'aggiunta dei Hooks, per modificare il stato interno di un componente 
 		\subsection{Risultati}	
 		Di seguito sono presentati dei screenshot che mostrano che, allo stesso modo in cui, strutturalmente, i nodi si aggregano in diverse comunità, anche i vettori di etichette di ogni nodo della stessa comunità sono simili. Dal punto di vista semantico si può vedere come membri dello stesso partito (stesso colore all'iterazione 0) hanno più probabilità di finire nella stessa comunità grazie al fatto che si seguono.
 		
-		\begin{center}
-				\begin{figure}[H]
-				\centering
-				\subfloat[\centering Vista Vettori di Etichette all'iterazione 0]{{\includegraphics[width=0.4\linewidth,keepaspectratio]{populite_vl_view}}}
-				\qquad
-				\subfloat[\centering Vista Vettori di Etichette all'iterazione 5] {{\includegraphics[width=0.43\linewidth,keepaspectratio]{populite_vl_view_5}}}
-				\qquad
-				\subfloat[\centering Vista Comunità]{{\includegraphics[width=0.35\linewidth,keepaspectratio]{populite_community_view}}}
-				\end{figure}
-		\end{center}		
-		
-		\begin{center}
-			\begin{figure}[H]
-				\centering
-				\includegraphics[width=0.5\linewidth,keepaspectratio]{iterations}
-				\caption{Controllo Iterazione}
-			\end{figure}
-		\end{center}
+%		\begin{center}
+%				\begin{figure}[H]
+%				\centering
+%				\subfloat[\centering Vista Vettori di Etichette all'iterazione 0]{{\includegraphics[width=0.4\linewidth,keepaspectratio]{populite_vl_view}}}
+%				\qquad
+%				\subfloat[\centering Vista Vettori di Etichette all'iterazione 5] {{\includegraphics[width=0.43\linewidth,keepaspectratio]{populite_vl_view_5}}}
+%				\qquad
+%				\subfloat[\centering Vista Comunità]{{\includegraphics[width=0.35\linewidth,keepaspectratio]{populite_community_view}}}
+%				\end{figure}
+%		\end{center}		
+%		
+%		\begin{center}
+%			\begin{figure}[H]
+%				\centering
+%				\includegraphics[width=0.5\linewidth,keepaspectratio]{iterations}
+%				\caption{Controllo Iterazione}
+%			\end{figure}
+%		\end{center}
 		
 		Il diametro della rete di questo dataset è 5 e come si può vedere dalla sezione di controllo iterazione, l'iterazione finale è la 5, quindi è stato necessario un numero di iterazioni vicino al diametro per arrivare al stazionamento dei vettori di etichette. Nel caso presentato è stato usato una soglia di trascuramento di $0.1$.
 	
